@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Añadir usuario</title>
+
+<script>
+
+function check_pass() {
+    if (document.getElementById('password').value ==
+            document.getElementById('passwordConfirm').value) {
+        document.getElementById('message').style.color = 'green';
+        document.getElementById('message').innerHTML = 'coincide';
+        document.getElementById('submit').disabled = false;
+    } else {
+        
+        document.getElementById('message').style.color = 'red';
+        document.getElementById('message').innerHTML = 'no coincide';
+        document.getElementById('submit').disabled = true;
+    }
+}
+
+
+
+</script>
+</head>
+<body>
+
+
+	<form class="form-horizontal" action="#"
+		th:action="@{/usuario/add/submit}" th:object="${newUser}"  method="post">
+		<fieldset>
+
+			<legend>Añadir Usuario</legend>
+
+			<div class="form-group">
+				<label class="col-md-4 control-label" for="username">Nombre
+					de usuario:</label>
+				<div class="col-md-4">
+					<input id="username" th:field="*{username}" name="username"
+						type="text" placeholder="Introduce el nombre de usuario"
+						class="form-control input-md" required>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-md-4 control-label" for="password">Contraseña:</label>
+				<div class="col-md-4">
+					<input id="password" th:field="*{password}" name="password"
+						type="password" placeholder="Introduce la contraseña"
+						class="form-control input-md" onchange='check_pass();' required>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-md-4 control-label" for="passwordConfirm">Repetir
+					contraseña:</label>
+				<div class="col-md-4">
+					<input id="passwordConfirm"
+						name="passwordConfirm" type="password"
+						placeholder="Repite la contraseña ingresada en el campo anterior"
+						class="form-control input-md" onchange='check_pass();' required>
+						<span id='message'></span>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-md-4 control-label" for="name">Nombre y
+					apellido:</label>
+				<div class="col-md-4">
+					<input id="name" th:field="*{name}" name="name" type="text"
+						placeholder="Introduce el nombre y apellido del usuario"
+						class="form-control input-md" required>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-md-4 control-label" for="email">Email:</label>
+				<div class="col-md-4">
+					<input id="email" th:field="*{email}" name="email"
+						type="email" placeholder="Introduce el email"
+						class="form-control input-md" required>
+				</div>
+			</div>
+		
+			<div class="form-group">
+				<label class="col-md-4 control-label" for="submit"></label>
+				<div class="col-md-4">
+					<button id="submit" name="submit" class="btn btn-primary" disabled>Añadir</button>
+				</div>
+			</div>
+		</fieldset>
+	</form>
+</body>
+</html>
