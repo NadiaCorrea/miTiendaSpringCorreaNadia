@@ -46,6 +46,7 @@ public class UserService {
 				e.printStackTrace();
 				throw new UserException("Ha habido un error al insertar el usuario en la base de datos.");
 			}
+			
 		} else {
 			throw new UserException("El usuario ya existe en la base de datos.");
 		}
@@ -53,15 +54,31 @@ public class UserService {
 		return user;
 	}
 
-	public void deleteUser(Users user) {
-		usersRepository.delete(user);
+	public void deleteUser(Users user) throws UserException {
+		
+		if(getUser(user.getUsername()) != null) {
+			usersRepository.delete(user);
+			
+		} else {
+			throw new UserException("El usuario no existe en la base de datos.");
+		}
+		
+		
 	}
 
-	public Users updateUser(Users user) {
-		if (getUser(user.getUsername()) != null) {
+	public Users updateUser(Users user) throws UserException {
+		
+		Users existingUser = getUser(user.getUsername());
+		
+		if ( existingUser!= null) {
+			
+			user.setPassword(existingUser.getPassword());
+			user.setAdmin(existingUser.isAdmin());
+			
 			return usersRepository.save(user);
+			
 		} else {
-			return null;
+			throw new UserException("El usuario no existe en la base de datos.");
 		}
 	}
 
