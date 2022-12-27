@@ -27,20 +27,20 @@ GRANT ALL PRIVILEGES ON miTiendaSpringCorreaNadia.* to 'correaNadia'@'%';
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `CATEGORIES`
+-- Estructura de tabla para la tabla `categories`
 --
 
-CREATE TABLE miTiendaSpringCorreaNadia.`CATEGORIES` (
+CREATE TABLE miTiendaSpringCorreaNadia.`categories` (
   `cat_id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
   `description` varchar(200) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Volcado de datos para la tabla `CATEGORIES`
+-- Volcado de datos para la tabla `categories`
 --
 
-INSERT INTO miTiendaSpringCorreaNadia.`CATEGORIES` (`cat_id`, `name`, `description`) VALUES
+INSERT INTO miTiendaSpringCorreaNadia.`categories` (`cat_id`, `name`, `description`) VALUES
 (1, 'frutas', 'frutas varias'),
 (2, 'verduras', 'verduras varias'),
 (3, 'conservas', 'productos en conserva varios'),
@@ -50,10 +50,10 @@ INSERT INTO miTiendaSpringCorreaNadia.`CATEGORIES` (`cat_id`, `name`, `descripti
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `ELEMENTS`
+-- Estructura de tabla para la tabla `elements`
 --
 
-CREATE TABLE miTiendaSpringCorreaNadia.`ELEMENTS` (
+CREATE TABLE miTiendaSpringCorreaNadia.`elements` (
   `ele_id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
   `description` varchar(200) DEFAULT NULL,
@@ -63,10 +63,10 @@ CREATE TABLE miTiendaSpringCorreaNadia.`ELEMENTS` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Volcado de datos para la tabla `ELEMENTS`
+-- Volcado de datos para la tabla `elements`
 --
 
-INSERT INTO miTiendaSpringCorreaNadia.`ELEMENTS` (`ele_id`, `name`, `description`, `price`, `stock`, `category`) VALUES
+INSERT INTO miTiendaSpringCorreaNadia.`elements` (`ele_id`, `name`, `description`, `price`, `stock`, `category`) VALUES
 (1, 'Flour - All Purpose', 'varius nulla facilisi', 1.76, 8, 5),
 (2, 'Asparagus - White, Canned', 'platea dictumst', 3.09, 6, 1),
 (3, 'Squash - Guords', 'tempus vel pede', 4.91, 7, 2);
@@ -74,23 +74,23 @@ INSERT INTO miTiendaSpringCorreaNadia.`ELEMENTS` (`ele_id`, `name`, `description
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `ORDERS`
+-- Estructura de tabla para la tabla `orders`
 --
 
-CREATE TABLE miTiendaSpringCorreaNadia.`ORDERS` (
+CREATE TABLE miTiendaSpringCorreaNadia.`orders` (
   `order_id` int(11) NOT NULL,
   `date` date DEFAULT NULL,
   `iva` double DEFAULT NULL,
-  `userName` varchar(20) DEFAULT NULL
+  `username` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `SALES`
+-- Estructura de tabla para la tabla `sales`
 --
 
-CREATE TABLE miTiendaSpringCorreaNadia.`SALES` (
+CREATE TABLE miTiendaSpringCorreaNadia.`sales` (
   `ele_id` int(11) NOT NULL,
   `order_id` int(11) NOT NULL,
   `salesDate` datetime NOT NULL,
@@ -101,11 +101,11 @@ CREATE TABLE miTiendaSpringCorreaNadia.`SALES` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `USERS`
+-- Estructura de tabla para la tabla `users`
 --
 
-CREATE TABLE miTiendaSpringCorreaNadia.`USERS` (
-  `userName` varchar(20) NOT NULL,
+CREATE TABLE miTiendaSpringCorreaNadia.`users` (
+  `username` varchar(20) NOT NULL,
   `password` varchar(32) DEFAULT NULL,
   `name` varchar(100) DEFAULT NULL,
   `email` varchar(100) DEFAULT NULL,
@@ -113,94 +113,93 @@ CREATE TABLE miTiendaSpringCorreaNadia.`USERS` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Volcado de datos para la tabla `USERS`
+-- Volcado de datos para la tabla `users`
 --
 
-INSERT INTO miTiendaSpringCorreaNadia.`USERS` (`userName`, `password`, `name`, `email`, `admin`) VALUES
+INSERT INTO miTiendaSpringCorreaNadia.`users` (`username`, `password`, `name`, `email`, `admin`) VALUES
+('nadia', 'a2e8cea3392da09d1d31be3fca68efed', 'nadia c', 'nadialiac@hotmail.com', 0),
 ('Nash', 'a2e8cea3392da09d1d31be3fca68efed', 'Nadia Correa', 'nadiaCorrea@gmail.com', 1),
 ('Pcaro', '487b5d4113bb0b62a558679bd761594f', 'Pedro Caro', 'pCaro@gmail.com', 0);
-
 --
 -- Índices para tablas volcadas
 --
 
 --
--- Indices de la tabla `CATEGORIES`
+-- Indices de la tabla  `categories`
 --
-ALTER TABLE miTiendaSpringCorreaNadia.`CATEGORIES`
+ALTER TABLE miTiendaSpringCorreaNadia.`categories`
   ADD PRIMARY KEY (`cat_id`);
-
+  
 --
--- Indices de la tabla `ELEMENTS`
+-- Indices de la tabla `elements`
 --
-ALTER TABLE miTiendaSpringCorreaNadia.`ELEMENTS`
+ALTER TABLE miTiendaSpringCorreaNadia.`elements`
   ADD PRIMARY KEY (`ele_id`),
   ADD KEY `fk_elements` (`category`);
 
 --
--- Indices de la tabla `ORDERS`
+-- Indices de la tabla `orders`
 --
-ALTER TABLE miTiendaSpringCorreaNadia.`ORDERS`
+ALTER TABLE miTiendaSpringCorreaNadia.`orders`
   ADD PRIMARY KEY (`order_id`),
-  ADD KEY `fk1_order` (`userName`);
+  ADD KEY `fk1_order` (`username`) USING BTREE;
 
 --
--- Indices de la tabla `SALES`
+-- Indices de la tabla `sales`
 --
-ALTER TABLE miTiendaSpringCorreaNadia.`SALES`
+ALTER TABLE miTiendaSpringCorreaNadia.`sales`
   ADD PRIMARY KEY (`ele_id`,`order_id`),
   ADD KEY `fk2_sales` (`order_id`);
-
+  
 --
--- Indices de la tabla `USERS`
+-- Indices de la tabla `users`
 --
-ALTER TABLE miTiendaSpringCorreaNadia.`USERS`
-  ADD PRIMARY KEY (`userName`);
+ALTER TABLE miTiendaSpringCorreaNadia.`users`
+  ADD PRIMARY KEY (`username`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
 --
--- AUTO_INCREMENT de la tabla `CATEGORIES`
+-- AUTO_INCREMENT de la tabla `categories`
 --
-ALTER TABLE miTiendaSpringCorreaNadia.`CATEGORIES`
+ALTER TABLE miTiendaSpringCorreaNadia.`categories`
   MODIFY `cat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT de la tabla `ELEMENTS`
+-- AUTO_INCREMENT de la tabla `elements`
 --
-ALTER TABLE miTiendaSpringCorreaNadia.`ELEMENTS`
+ALTER TABLE miTiendaSpringCorreaNadia.`elements`
   MODIFY `ele_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT de la tabla `ORDERS`
+-- AUTO_INCREMENT de la tabla `orders`
 --
-ALTER TABLE miTiendaSpringCorreaNadia.`ORDERS`
+ALTER TABLE miTiendaSpringCorreaNadia.`orders`
   MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- Restricciones para tablas volcadas
 --
 
 --
--- Filtros para la tabla `ELEMENTS`
+-- Filtros para la tabla `elements`
 --
-ALTER TABLE miTiendaSpringCorreaNadia.`ELEMENTS`
-  ADD CONSTRAINT `fk_elements` FOREIGN KEY (`category`) REFERENCES `CATEGORIES` (`cat_id`);
+ALTER TABLE miTiendaSpringCorreaNadia.`elements`
+  ADD CONSTRAINT `fk_elements` FOREIGN KEY (`category`) REFERENCES `categories` (`cat_id`);
+  
+--
+-- Filtros para la tabla `orders`
+--
+ALTER TABLE miTiendaSpringCorreaNadia.`orders`
+  ADD CONSTRAINT `fk1_order` FOREIGN KEY (`username`) REFERENCES `users` (`username`);
 
 --
--- Filtros para la tabla `ORDERS`
+-- Filtros para la tabla `sales`
 --
-ALTER TABLE miTiendaSpringCorreaNadia.`ORDERS`
-  ADD CONSTRAINT `fk1_order` FOREIGN KEY (`userName`) REFERENCES `USERS` (`userName`);
-
---
--- Filtros para la tabla `SALES`
---
-ALTER TABLE miTiendaSpringCorreaNadia.`SALES`
-  ADD CONSTRAINT `fk1_sales` FOREIGN KEY (`ele_id`) REFERENCES `ELEMENTS` (`ele_id`),
-  ADD CONSTRAINT `fk2_sales` FOREIGN KEY (`order_id`) REFERENCES `ORDERS` (`order_id`);
+ALTER TABLE miTiendaSpringCorreaNadia.`sales`
+  ADD CONSTRAINT `fk1_sales` FOREIGN KEY (`ele_id`) REFERENCES `elements` (`ele_id`),
+  ADD CONSTRAINT `fk2_sales` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
