@@ -82,4 +82,19 @@ public class UserService {
 		}
 	}
 
+	
+	public Users updateAdmin(Users user) throws UserException {
+		
+		Users existingUser = getUser(user.getUsername());
+		
+		if(existingUser != null) {
+			existingUser.setAdmin(user.isAdmin());
+			
+			return usersRepository.save(existingUser);
+			
+		}  else {
+			throw new UserException("El usuario no existe en la base de datos.");
+		}
+		
+	}
 }

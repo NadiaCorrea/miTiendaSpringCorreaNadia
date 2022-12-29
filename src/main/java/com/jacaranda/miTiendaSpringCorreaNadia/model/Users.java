@@ -120,9 +120,31 @@ public class Users {
 		return admin;
 	}
 	
+	public String printAdmin() {
+		String result = "No";
+		
+		if (isAdmin()) {
+			result = "Si";
+		}
+		
+		return result;		
+	}
+	
 	public void setAdmin(boolean admin) {
 		this.admin = admin;
 	}
+	
+	
+
+	public List<Orders> getOrders() {
+		return orders;
+	}
+
+
+	public void setOrders(List<Orders> orders) {
+		this.orders = orders;
+	}
+
 
 	@Override
 	public int hashCode() {

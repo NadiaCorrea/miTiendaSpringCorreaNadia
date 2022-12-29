@@ -22,6 +22,7 @@
 						<th>USUARIO</th>
 						<th>NOMBRE</th>
 						<th>EMAIL</th>
+						<th>PERMISO ADMINISTRADOR</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -29,6 +30,7 @@
 						<td th:text="${user.username}"></td>
 						<td th:text="${user.name}"></td>
 						<td th:text="${user.email}"></td>
+						<td th:text="${user.printAdmin()}"></td>
 					</tr>
 				</tbody>
 			</table>

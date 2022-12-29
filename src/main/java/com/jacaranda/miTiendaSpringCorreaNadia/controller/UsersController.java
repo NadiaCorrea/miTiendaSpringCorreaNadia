@@ -86,7 +86,7 @@ public class UsersController {
 
 	}
 
-	@PostMapping("/deleteStudent/submit")
+	@PostMapping("/usuario/delete/submit")
 	public String deleteUserSubmit(@ModelAttribute("user") Users user, Model model) {
 
 		try {
@@ -118,7 +118,7 @@ public class UsersController {
 		}
 	}
 
-	@PostMapping("/updateUser/submit")
+	@PostMapping("/usuario/update/submit")
 	public String updateUserSubmit(@ModelAttribute("user") Users user, Model model) {
 
 		try {
@@ -131,6 +131,36 @@ public class UsersController {
 			return "error";
 		}
 
+	}
+	
+	@GetMapping("/usuario/admin")
+	public String updateAdmin(Model model, @RequestParam(name = "id") String username) {
+		
+		Users user = usersService.getUser(username);
+		
+		if(user != null) {
+			model.addAttribute("user", user);
+			return "updateAdmin";
+			
+		} else {
+			model.addAttribute("errorMessage", "No exite el usuario.");
+			return "error";
+		}
+	}
+	
+	
+	@PostMapping("/usuario/admin/submit")
+	public String updateAdminSubmit(@ModelAttribute("user") Users user, Model model) {
+		
+		try {
+			usersService.updateAdmin(user);
+			return "redirect:/usuario/list";
+			
+		} catch (Exception e) {
+			model.addAttribute("errorMessage", e.getMessage());
+
+			return "error";
+		}
 	}
 
 }

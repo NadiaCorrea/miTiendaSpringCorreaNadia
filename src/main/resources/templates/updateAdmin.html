@@ -2,16 +2,15 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Eliminar usuario</title>
+<title>Actualizar estado de administrador</title>
 </head>
 <body>
-
 	<form class="form-horizontal" action="#"
-		th:action="@{/usuario/delete/submit}" th:object="${user}"
+		th:action="@{/usuario/admin/submit}" th:object="${user}"
 		method="post">
 		<fieldset>
 
-			<legend>Usuario a eliminar</legend>
+			<legend>Cambiar permiso de Administrador</legend>
 
 			<div class="form-group">
 				<label class="col-md-4 control-label" for="username">Nombre de usuario:</label>
@@ -38,11 +37,20 @@
 						class="form-control input-md" readonly="readonly">
 				</div>
 			</div>
-
+			
 			<div class="form-group">
+				<label class="col-md-4 control-label" for="admin">Permiso de administrador</label>
+				<div class="col-md-4">
+				
+					<input type="checkbox" id="admin" name="admin" th:field= "*{admin}" class="form-control input-md">
+				
+				</div>
+			</div>
+
+				<div class="form-group">
 				<label class="col-md-4 control-label" for="submit"></label>
 				<div class="col-md-4">
-					<button id="submit" name="submit" class="btn btn-primary">Eliminar</button>
+					<button id="submit" name="submit" class="btn btn-primary">Cambiar</button>
 				</div>
 			</div>
 
@@ -56,6 +64,7 @@
 					class="btn btn-primary">Cancelar</button></a>
 		</div>
 	</div>
+
 
 
 </body>
