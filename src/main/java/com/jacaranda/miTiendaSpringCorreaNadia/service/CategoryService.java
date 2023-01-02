@@ -14,22 +14,28 @@ public class CategoryService {
 	@Autowired
 	CategoryRepository catRepository;
 	
+	//It gets a category by its ID
 	public Categories getCategory(int catId) {
 		return catRepository.findById(catId).orElse(null);
 	}
 	
+	//It gets a category by its name
 	public Categories getCategoryByName(String name) {
 		return catRepository.findOneByNameIgnoreCase(name);
 	}
 	
+	//It gets all categories
 	public List<Categories> getCategories(){
 		return catRepository.findAll();
 	}
 	
+	//It adds a category to the DB if it doesn't exist
 	public Categories addCategory(Categories category) throws CategoryException {
+		
 		Categories existingCat = getCategoryByName(category.getName());
 		
 		if(existingCat == null) {
+		
 			existingCat = catRepository.save(category);
 			
 		} else {
@@ -39,6 +45,7 @@ public class CategoryService {
 		return existingCat;
 	}
 	
+	//It removes a category from the DB if it exists
 	public void deleteCategory(Categories category) throws CategoryException {
 		
 		if(getCategory(category.getCat_id()) != null) {
@@ -49,6 +56,7 @@ public class CategoryService {
 		
 	}
 	
+	//It updates a category on the DB if it exists
 	public Categories updateCategory(Categories category) throws CategoryException {
 		
 		Categories existingCat = getCategory(category.getCat_id());

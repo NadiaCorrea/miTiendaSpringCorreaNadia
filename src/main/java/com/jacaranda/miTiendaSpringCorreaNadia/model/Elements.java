@@ -10,12 +10,15 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 public class Elements {
 	@Id
 	private int ele_id;
+	@NotEmpty(message = "El nombre no puede quedar vacío")
 	private String name;
+	@NotEmpty(message = "La descripción no puede quedar vacía")
 	private String description;
 	private double price;
 	private int stock;

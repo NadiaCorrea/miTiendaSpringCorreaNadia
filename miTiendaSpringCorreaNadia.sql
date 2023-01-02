@@ -87,10 +87,10 @@ CREATE TABLE miTiendaSpringCorreaNadia.`orders` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `elementOrder`
+-- Estructura de tabla para la tabla `element_order`
 --
 
-CREATE TABLE miTiendaSpringCorreaNadia.`elementOrder` (
+CREATE TABLE miTiendaSpringCorreaNadia.`element_order` (
   `ele_id` int(11) NOT NULL,
   `order_id` int(11) NOT NULL,
   `quantity` int(11) DEFAULT NULL
@@ -145,9 +145,9 @@ ALTER TABLE miTiendaSpringCorreaNadia.`orders`
 --
 -- Indices de la tabla `elementOrder`
 --
-ALTER TABLE miTiendaSpringCorreaNadia.`elementOrder`
+ALTER TABLE miTiendaSpringCorreaNadia.`element_order`
 --
-ALTER TABLE `elementOrder`
+ALTER TABLE `element_order`
   ADD PRIMARY KEY (`ele_id`,`order_id`),
   ADD KEY `fk2_sales` (`order_id`);
   
@@ -195,9 +195,9 @@ ALTER TABLE miTiendaSpringCorreaNadia.`orders`
   ADD CONSTRAINT `fk1_order` FOREIGN KEY (`username`) REFERENCES `users` (`username`);
 
 --
--- Filtros para la tabla `elementOrder`
+-- Filtros para la tabla `element_order`
 --
-ALTER TABLE miTiendaSpringCorreaNadia.`elementOrder`
+ALTER TABLE miTiendaSpringCorreaNadia.`element_order`
   ADD CONSTRAINT `fk1_sales` FOREIGN KEY (`ele_id`) REFERENCES `elements` (`ele_id`),
   ADD CONSTRAINT `fk2_sales` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`);
 COMMIT;
