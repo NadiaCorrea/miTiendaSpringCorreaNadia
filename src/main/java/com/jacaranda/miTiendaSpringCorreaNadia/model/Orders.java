@@ -1,14 +1,18 @@
 package com.jacaranda.miTiendaSpringCorreaNadia.model;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.OneToMany;
+
 
 @Entity
 public class Orders {
@@ -17,9 +21,13 @@ public class Orders {
 	private int order_id;
 	private LocalDateTime date;
 	private double iva;
+	
 	@ManyToOne
 	@JoinColumn (name="username", insertable = false, updatable = false) // name refers to the column on the db table
 	private Users user;
+	
+	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<ElementOrder> elementOrder = new ArrayList<>();
 
 	public Orders() {
 		
@@ -32,15 +40,7 @@ public class Orders {
 		setUser(user);
 		
 	}
-	
 
-	public Orders(int order_id, LocalDateTime date, double iva, Users user) {
-		super();
-		this.order_id = order_id;
-		this.date = date;
-		this.iva = iva;
-		
-	}
 
 	public int getOrder_id() {
 		return order_id;
@@ -58,7 +58,11 @@ public class Orders {
 		if(date == null) {
 			throw new OrdersException("La fecha no puede ser nula.");
 		} else {
-			this.date = date;
+			if(date.isAfter(LocalDateTime.now())) {
+				throw new OrdersException("La fecha de venta no puede ser superior a la fecha actual.");
+			} else {
+				this.date = date;
+			}
 		}	
 		
 	}
@@ -86,6 +90,14 @@ public class Orders {
 		} else {
 			this.user = user;
 		}
+	}
+
+	public List<ElementOrder> getElementOrder() {
+		return elementOrder;
+	}
+
+	public void setElementOrder(List<ElementOrder> elementOrder) {
+		this.elementOrder = elementOrder;
 	}
 
 	@Override

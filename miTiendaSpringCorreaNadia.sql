@@ -87,15 +87,13 @@ CREATE TABLE miTiendaSpringCorreaNadia.`orders` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `sales`
+-- Estructura de tabla para la tabla `elementOrder`
 --
 
-CREATE TABLE miTiendaSpringCorreaNadia.`sales` (
+CREATE TABLE miTiendaSpringCorreaNadia.`elementOrder` (
   `ele_id` int(11) NOT NULL,
   `order_id` int(11) NOT NULL,
-  `salesDate` datetime NOT NULL,
-  `quantity` int(11) DEFAULT NULL,
-  `price` double DEFAULT NULL
+  `quantity` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -145,9 +143,11 @@ ALTER TABLE miTiendaSpringCorreaNadia.`orders`
   ADD KEY `fk1_order` (`username`) USING BTREE;
 
 --
--- Indices de la tabla `sales`
+-- Indices de la tabla `elementOrder`
 --
-ALTER TABLE miTiendaSpringCorreaNadia.`sales`
+ALTER TABLE miTiendaSpringCorreaNadia.`elementOrder`
+--
+ALTER TABLE `elementOrder`
   ADD PRIMARY KEY (`ele_id`,`order_id`),
   ADD KEY `fk2_sales` (`order_id`);
   
@@ -195,9 +195,9 @@ ALTER TABLE miTiendaSpringCorreaNadia.`orders`
   ADD CONSTRAINT `fk1_order` FOREIGN KEY (`username`) REFERENCES `users` (`username`);
 
 --
--- Filtros para la tabla `sales`
+-- Filtros para la tabla `elementOrder`
 --
-ALTER TABLE miTiendaSpringCorreaNadia.`sales`
+ALTER TABLE miTiendaSpringCorreaNadia.`elementOrder`
   ADD CONSTRAINT `fk1_sales` FOREIGN KEY (`ele_id`) REFERENCES `elements` (`ele_id`),
   ADD CONSTRAINT `fk2_sales` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`);
 COMMIT;
