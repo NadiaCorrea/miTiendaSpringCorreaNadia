@@ -7,13 +7,16 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 public class Categories {
 	
 	@Id
 	private int cat_id;
+	@NotEmpty(message = "El nombre no puede quedar vacío")
 	private String name; 
+	@NotEmpty(message = "La descripción no puede quedar vacía")
 	private String description;
 	
 	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
