@@ -1,0 +1,64 @@
+@charset "UTF-8";
+
+.container{
+	height: 100%;
+	width: 100%;
+	align-content: center;
+}
+
+/* style for lists*/
+.starter-template h1{
+	color: #C23331;
+}
+
+.table thead{
+	background-color: #F6F6F4;
+}
+
+/*style for forms*/
+
+.form-horizontal legend {
+	color: #F8937E;
+	font-weight: bold;
+}
+
+.form-group label{
+	font-weight: bold;
+}
+
+input{
+	width: 80%;
+}
+
+#admin{
+	width: auto;
+}
+
+.form-group button{
+	background-color: #A1D2FE;
+	border-color: #A1D2FE;
+}
+
+.form-group button:hover{
+	background-color: #0d6efd;
+	border-color: #0d6efd;
+}
+
+.btn-primary{
+	color: white;
+	background-color: #F8937E;
+	border-color: #F8937E;
+}
+
+.btn-primary:hover{
+	background-color: #C23331;
+	border-color: #C23331;
+}
+
+.form-group div {
+	margin: 5px;
+}
+
+#cancel{
+	float: right; 
+}

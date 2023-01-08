@@ -90,6 +90,7 @@ public class UserService {
 		if(existingUser != null) {
 			existingUser.setAdmin(user.isAdmin());
 			
+			existingUser.getOrders();
 			return usersRepository.save(existingUser);
 			
 		}  else {
