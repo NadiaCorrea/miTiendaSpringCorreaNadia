@@ -146,8 +146,6 @@ ALTER TABLE miTiendaSpringCorreaNadia.`orders`
 -- Indices de la tabla `elementOrder`
 --
 ALTER TABLE miTiendaSpringCorreaNadia.`element_order`
---
-ALTER TABLE `element_order`
   ADD PRIMARY KEY (`ele_id`,`order_id`),
   ADD KEY `fk2_sales` (`order_id`);
   
