@@ -13,7 +13,7 @@ import jakarta.validation.constraints.NotEmpty;
 public class Categories {
 	
 	@Id
-	private int cat_id;
+	private int catId;
 	@NotEmpty(message = "El nombre no puede quedar vacío")
 	private String name; 
 	@NotEmpty(message = "La descripción no puede quedar vacía")
@@ -22,7 +22,7 @@ public class Categories {
 	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Elements> elements;
 	
-	
+
 	public Categories() {
 		super();
 		
@@ -36,13 +36,13 @@ public class Categories {
 	}
 
 
-	public int getCat_id() {
-		return cat_id;
+	public int getCatId() {
+		return catId;
 	}
 
 
-	public void setCat_id(int cat_id) {
-		this.cat_id = cat_id;
+	public void setCatId(int catId) {
+		this.catId = catId;
 	}
 
 
@@ -90,7 +90,7 @@ public class Categories {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(cat_id);
+		return Objects.hash(catId);
 	}
 
 
@@ -103,13 +103,13 @@ public class Categories {
 		if (getClass() != obj.getClass())
 			return false;
 		Categories other = (Categories) obj;
-		return cat_id == other.cat_id;
+		return catId == other.catId;
 	}
 
 
 	@Override
 	public String toString() {
-		return "Categories [cat_id=" + cat_id + ", name=" + name + ", description=" + description + ", elements="
+		return "Categories [catId=" + catId + ", name=" + name + ", description=" + description + ", elements="
 				+ elements + "]";
 	}
 	

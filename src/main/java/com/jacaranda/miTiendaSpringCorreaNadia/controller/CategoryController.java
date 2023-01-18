@@ -1,8 +1,10 @@
 package com.jacaranda.miTiendaSpringCorreaNadia.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,12 +24,23 @@ public class CategoryController {
 
 	// It shows the list of categories
 	@GetMapping("/categoria/list")
-	public String showCategories(Model model) {
+	public String showCategories(Model model, @RequestParam("pageNumber") Optional<Integer> pageNumber,
+			@RequestParam("sizeNumber") Optional<Integer> sizeNumber,
+			@RequestParam("sortField") Optional<String> sortField,
+			@RequestParam("stringFind") Optional<String> stringFind) {
 
-		model.addAttribute("categories", catService.getCategories());
+		Page<Categories> page = catService.findAll(pageNumber.orElse(1), sizeNumber.orElse(5), sortField.orElse("catId"), stringFind.orElse(""));
+		
+		model.addAttribute("currentPage", pageNumber.orElse(1));
+		model.addAttribute("totalPages", page.getTotalPages());
+		model.addAttribute("totalItems", page.getTotalElements());
+		model.addAttribute("sortField", sortField.orElse("catId"));
+		model.addAttribute("stringFind", stringFind.orElse(""));
+		model.addAttribute("categories", page.getContent());
 
 		return "categoriesList";
 	}
+	
 
 	// It shows the form to add a category
 	@GetMapping("/categoria/add")

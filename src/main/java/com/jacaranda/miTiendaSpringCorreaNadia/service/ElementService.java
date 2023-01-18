@@ -43,7 +43,7 @@ public class ElementService {
 	public Elements addElement(Elements element) throws ElementException {
 
 		Elements existingEle = getElementByName(element.getName());
-		Categories existingCat = catRepository.findById(element.getCategory().getCat_id()).orElse(null);
+		Categories existingCat = catRepository.findById(element.getCategory().getCatId()).orElse(null);
 
 		if (existingCat != null) {
 
@@ -80,7 +80,7 @@ public class ElementService {
 	public Elements updateElement(Elements element) throws ElementException {
 
 		Elements existingEle = getElement(element.getEleId());
-		Categories existingCat = catRepository.findById(element.getCategory().getCat_id()).orElse(null);
+		Categories existingCat = catRepository.findById(element.getCategory().getCatId()).orElse(null);
 
 		if (existingCat != null) {
 
@@ -118,6 +118,18 @@ public class ElementService {
 			return eleRepository.findByNameLike("%" + stringFind + "%", pageable); 
 		}
 	
+	}
+	
+	public Page<Elements> findAllByCategory(int pageNum, int pageSize, String sortField, String stringFind, int catId){
+		
+		Pageable pageable = PageRequest.of(pageNum - 1, pageSize, Sort.by(sortField).ascending());
+		
+		if(stringFind.equals("")) {
+			return eleRepository.findByCategoryCatId(catId, pageable);
+		}else {
+			return eleRepository.findByCategoryCatIdAndNameLike(catId, "%" + stringFind + "%", pageable); 
+		}
+		
 	}
 	
 }

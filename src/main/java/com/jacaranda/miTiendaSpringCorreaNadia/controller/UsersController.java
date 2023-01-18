@@ -64,9 +64,7 @@ public class UsersController {
 			return "error";
 		}
 		
-		
 	}
-	
 	
 
 	// shows the list of users

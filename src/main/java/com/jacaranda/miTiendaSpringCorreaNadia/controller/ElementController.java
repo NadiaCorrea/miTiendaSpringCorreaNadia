@@ -51,6 +51,28 @@ public class ElementController {
 		return "elementsList";
 	}
 
+	@GetMapping("/articulo/categoria")
+	public String showArticlesByCategory(Model model,@RequestParam("pageNumber") Optional<Integer> pageNumber,
+			@RequestParam("sizeNumber") Optional<Integer> sizeNumber,
+			@RequestParam("sortField") Optional<String> sortField,
+			@RequestParam("stringFind") Optional<String> stringFind,
+			@RequestParam("catId") int catId) {
+		
+		Page<Elements> page = eleService.findAllByCategory(pageNumber.orElse(1), sizeNumber.orElse(10), sortField.orElse("eleId"), stringFind.orElse(""), catId);
+		
+		model.addAttribute("currentPage", pageNumber.orElse(1));
+		model.addAttribute("totalPages", page.getTotalPages());
+		model.addAttribute("totalItems", page.getTotalElements());
+		model.addAttribute("sortField", sortField.orElse("eleId"));
+		model.addAttribute("stringFind", stringFind.orElse(""));
+		model.addAttribute("elements", page.getContent());
+		model.addAttribute("catId", catId);
+
+		return "elementsCategoryList";
+	}
+	
+	
+
 	// It shows the form to add an article
 	@GetMapping("/articulo/add")
 	public String addArticle(Model model) {
