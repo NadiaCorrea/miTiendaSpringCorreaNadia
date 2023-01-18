@@ -1,9 +1,15 @@
 package com.jacaranda.miTiendaSpringCorreaNadia.service;
 
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.jacaranda.miTiendaSpringCorreaNadia.model.Categories;
 import com.jacaranda.miTiendaSpringCorreaNadia.model.ElementException;
@@ -60,7 +66,7 @@ public class ElementService {
 	// It removes an article from the DB if it exists
 	public void deleteElement(Elements element) throws ElementException {
 
-		Elements existingEle = getElement(element.getEle_id());
+		Elements existingEle = getElement(element.getEleId());
 
 		if (existingEle != null) {
 			eleRepository.delete(existingEle);
@@ -73,7 +79,7 @@ public class ElementService {
 	// It updates an article on the DB if it exists
 	public Elements updateElement(Elements element) throws ElementException {
 
-		Elements existingEle = getElement(element.getEle_id());
+		Elements existingEle = getElement(element.getEleId());
 		Categories existingCat = catRepository.findById(element.getCategory().getCat_id()).orElse(null);
 
 		if (existingCat != null) {
@@ -102,4 +108,16 @@ public class ElementService {
 			throw new ElementException("La categoría del artículo no existe en la base de datos.");
 		}
 	}
+	
+	public Page<Elements> findAll(int pageNum, int pageSize, String sortField, String stringFind) {
+		Pageable pageable = PageRequest.of(pageNum - 1, pageSize, Sort.by(sortField).ascending());
+
+		if(stringFind.equals("")) {
+			return eleRepository.findAll(pageable);
+		}else {
+			return eleRepository.findByNameLike("%" + stringFind + "%", pageable); 
+		}
+	
+	}
+	
 }

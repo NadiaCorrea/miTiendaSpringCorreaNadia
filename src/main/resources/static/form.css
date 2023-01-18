@@ -1,64 +1,116 @@
 @charset "UTF-8";
 
-.container{
-	height: 100%;
-	width: 100%;
-	align-content: center;
+
+body {
+	background: #d9a7c7; /* fallback for old browsers */
+	background: -webkit-linear-gradient(to right, #fffcdc, #d9a7c7);
+	/* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to right, #fffcdc, #d9a7c7);
+	/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
+.container {
+	margin-top:10px;
+	background-color: white;
+	border-radius: 5px;
+}
+
+/* Style for index page*/
+#logoContainer{
+	align-items: center;
+}
+
+.logo{
+	object-fit:contain;	
+	height:100%;
+	width: 100%;
+	vertical-align: middle;
+}
+
+#indexButtons{
+	align-content: space-around;
+	vertical-align: middle;
+	display: flex;
+	justify-content: space-evenly;
+	justify-items:center;
+}
+
+#indexButtons button{
+	background-color: #FBC8F3;
+	border-color: #FBC8F3;
+	color: black;
+	font-weight: bold;
+}
+
+#indexButtons button:hover{
+	background-color: #fffcdc;
+	border: #fffcdc;
+	color: black;
+}
+
+
 /* style for lists*/
-.starter-template h1{
+.starter-template h1 {
 	color: #C23331;
 }
 
-.table thead{
+.table thead {
 	background-color: #F6F6F4;
 }
 
 /*style for forms*/
-
 .form-horizontal legend {
 	color: #F8937E;
 	font-weight: bold;
 }
 
-.form-group label{
+.control-label {
 	font-weight: bold;
 }
 
-input{
-	width: 80%;
-}
-
-#admin{
+#admin {
 	width: auto;
 }
 
-.form-group button{
-	background-color: #A1D2FE;
-	border-color: #A1D2FE;
+#submit{
+	background-color: #FBC8F3;
+	border-color: #FBC8F3;
+	color: black;
+	font-weight: bold;
+	
 }
 
-.form-group button:hover{
-	background-color: #0d6efd;
-	border-color: #0d6efd;
+#submit:hover{
+	background-color: #ff8040;
+	border: #ff8040;
+	color: black;
+	font-weight: bold;
 }
 
-.btn-primary{
-	color: white;
-	background-color: #F8937E;
-	border-color: #F8937E;
+.myButton{
+	background-color: #fffcdc;
+	border-color: #ffdcdc;
+	color: black;
+	font-weight: bold;
 }
 
-.btn-primary:hover{
-	background-color: #C23331;
-	border-color: #C23331;
+.myButton:hover {
+	background-color: #ff8040;
+	border: #ff8040;
+	color: black;
+	font-weight: bold;
 }
 
 .form-group div {
 	margin: 5px;
 }
 
-#cancel{
-	float: right; 
+#cancel {
+	float: right;
+}
+
+footer{
+
+	background-color: black;
+	color: white;
 }

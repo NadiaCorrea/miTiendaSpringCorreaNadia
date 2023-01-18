@@ -1,9 +1,13 @@
 package com.jacaranda.miTiendaSpringCorreaNadia.model;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -16,7 +20,7 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
 @Entity
-public class Users {
+public class Users implements UserDetails {
 	@Id
 	private String username;
 	
@@ -31,7 +35,11 @@ public class Users {
 	@Email(message = "Debe cumplir con el formato de email: ejemplo@email.com")
 	private String email;
 	
-	private boolean admin;
+	private String role;
+	private String verificationcode;
+	private boolean enabled;
+	
+	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Orders> orders = new ArrayList<>();
 	
@@ -47,17 +55,17 @@ public class Users {
 		setPassword(password);
 		setName(name);
 		setEmail(email);
-		setAdmin(false);
+		setRole("USER");
 	}
 	
 	
-	public Users(String username, String password, String name, String email, boolean admin) throws UserException {
+	public Users(String username, String password, String name, String email, String role) throws UserException {
 		super();
 		setUsername(username);
 		setPassword(password);
 		setName(name);
 		setEmail(email);
-		setAdmin(admin);
+		setRole(role);
 
 	}
 
@@ -115,26 +123,46 @@ public class Users {
 			this.email = email;
 		}
 	}
-	
-	public boolean isAdmin() {
-		return admin;
+		
+	public String getRole() {
+		return role;
 	}
+
+	public void setRole(String role) throws UserException {
+		if(!role.equals("USER")  && !role.equals("ADMIN")) {
+			throw new UserException("El rol no es válido.");
+		} else {
+			this.role = role;
+		}
+		
+	}
+
 	
 	public String printAdmin() {
 		String result = "No";
 		
-		if (isAdmin()) {
+		if (getRole().equals("ADMIN") ) {
 			result = "Si";
 		}
 		
 		return result;		
 	}
 	
-	public void setAdmin(boolean admin) {
-		this.admin = admin;
+
+	public String getVerificationcode() {
+		return verificationcode;
 	}
-	
-	
+
+
+	public void setVerificationcode(String verificationcode) {
+		this.verificationcode = verificationcode;
+	}
+
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
 
 	public List<Orders> getOrders() {
 		return orders;
@@ -163,11 +191,53 @@ public class Users {
 		return Objects.equals(username, other.username);
 	}
 
+
+
 	@Override
 	public String toString() {
 		return "Users [username=" + username + ", password=" + password + ", name=" + name + ", email=" + email
-				+ ", admin=" + admin + "]";
+				+ ", role=" + role + ", verificationcode=" + verificationcode + ", enabled=" + enabled + ", orders="
+				+ orders + "]";
 	}
+
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		List<GrantedAuthority> authorities = new ArrayList<>();
+		
+		GrantedAuthority authority = new SimpleGrantedAuthority(this.role);
+		authorities.add(authority);
+		
+		return authorities;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+
+	@Override
+	public boolean isAccountNonLocked() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+
+	@Override
+	public boolean isEnabled() {
+		return this.enabled;
+	}
+
+	
 	
 
 }

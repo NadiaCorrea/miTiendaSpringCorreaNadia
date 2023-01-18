@@ -11,7 +11,9 @@
 <link href="/form.css" rel="stylesheet">
 </head>
 <body>
-	<div class="container">
+	<div class="container text-center">
+	
+	<div class="row justify-content-center">
 		<form class="form-horizontal" action="#"
 			th:action="@{/articulo/add/submit}" th:object="${element}"
 			method="post">
@@ -19,10 +21,10 @@
 
 				<legend>Añadir Artículo</legend>
 
-				<div class="form-group">
-					<label class="col-md-4 control-label" for="name">Nombre del
+				<div class="col-8 form-group">
+					<label class="control-label" for="name">Nombre del
 						artículo:</label>
-					<div class="col-md-4">
+					<div class="col-8">
 						<input id="name" th:field="*{name}" name="name" type="text"
 							placeholder="Introduce el nombre del artículo"
 							class="form-control input-md" required>
@@ -83,6 +85,7 @@
 
 			</fieldset>
 		</form>
+	</div>
 	</div>
 </body>
 </html>

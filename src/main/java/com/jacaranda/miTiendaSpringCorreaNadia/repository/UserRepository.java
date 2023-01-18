@@ -10,4 +10,5 @@ public interface UserRepository extends JpaRepository<Users, String>{
 	@Query("Select p from Users p where p.username = ?1" )
 	Users findByUser(String nombre);
 
+	Users findByVerificationcode(String code);
 }

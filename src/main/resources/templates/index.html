@@ -8,11 +8,35 @@
 	rel="stylesheet"
 	integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
 	crossorigin="anonymous">
+<link href="/form.css" rel="stylesheet">
 </head>
 <body>
+	<div class="container my-5">
 
-	<div>
-		<h3>Bienvenido</h3>
+		<div class="row" id="logoContainer">
+			<div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+				<img class="logo" alt="Logo de Comestibles Correa"
+					src="/img/logoComestiblesCorrea.svg">
+			</div>
+			<div id="indexButtons" class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+				<div class="row mb-3">
+					<a th:href="@{/register}"><button type="button"
+							class="btn btn-primary">Sign up</button></a>
+				</div>
+				<div class="row mb-3">
+					<a th:href="@{/articulo/list}"><button type="button"
+							class="btn btn-primary">Login</button></a>
+				</div>
+
+			</div>
+		</div>
 	</div>
+
+	<footer class="text-center text-lg-start">
+		<!-- Copyright -->
+		<div class="text-center p-3">© Comestibles
+			Correa - 2023</div>
+		<!-- Copyright -->
+	</footer>
 </body>
 </html>

@@ -15,7 +15,7 @@ import jakarta.validation.constraints.NotEmpty;
 @Entity
 public class Elements {
 	@Id
-	private int ele_id;
+	private int eleId;
 	@NotEmpty(message = "El nombre no puede quedar vacío")
 	private String name;
 	@NotEmpty(message = "La descripción no puede quedar vacía")
@@ -33,24 +33,42 @@ public class Elements {
 	
 	public Elements() {
 		super();
-	}
 	
-	public Elements(String name, String description, double price, int stock, Categories category) throws ElementException {
+	}
+
+
+	
+
+
+
+	public Elements(@NotEmpty(message = "El nombre no puede quedar vacío") String name,
+			@NotEmpty(message = "La descripción no puede quedar vacía") String description, double price, int stock,
+			Categories category, List<ElementOrder> elementOrder) {
 		super();
-		setName(name);
-		setDescription(description);
-		setPrice(price);
-		setStock(stock);
-		setCategory(category);
+		this.name = name;
+		this.description = description;
+		this.price = price;
+		this.stock = stock;
+		this.category = category;
+		this.elementOrder = elementOrder;
 	}
 
-	public int getEle_id() {
-		return ele_id;
+
+
+
+
+
+	public int getEleId() {
+		return eleId;
 	}
 
-	public void setEle_id(int ele_id) {
-		this.ele_id = ele_id;
+
+
+	public void setEleId(int eleId) {
+		this.eleId = eleId;
 	}
+
+
 
 	public String getName() {
 		return name;
@@ -127,7 +145,7 @@ public class Elements {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(ele_id);
+		return Objects.hash(eleId);
 	}
 	@Override
 	public boolean equals(Object obj) {
@@ -138,12 +156,12 @@ public class Elements {
 		if (getClass() != obj.getClass())
 			return false;
 		Elements other = (Elements) obj;
-		return ele_id == other.ele_id;
+		return eleId == other.eleId;
 	}
 
 	@Override
 	public String toString() {
-		return "Elements [ele_id=" + ele_id + ", name=" + name + ", description=" + description + ", price=" + price
+		return "Elements [eleId=" + eleId + ", name=" + name + ", description=" + description + ", price=" + price
 				+ ", stock=" + stock + ", category=" + category + ", elementOrder=" + elementOrder + "]";
 	}
 	

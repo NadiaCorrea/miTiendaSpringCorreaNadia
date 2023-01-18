@@ -49,11 +49,13 @@
 				</div>
 
 				<div class="form-group">
-					<label class="col-md-4 control-label" for="admin">Permiso
-						de administrador</label>
+					<label class="col-md-4 control-label" for="role">Permiso de
+						administrador</label>
 					<div class="col-md-4">
-
-						<input type="checkbox" id="admin" name="admin" th:field="*{admin}">
+						<select id="role" th:field="*{role}" name="role">
+							<option value="USER">Usuario</option>
+							<option value="ADMIN">Administrador</option>
+						</select>
 
 					</div>
 				</div>
