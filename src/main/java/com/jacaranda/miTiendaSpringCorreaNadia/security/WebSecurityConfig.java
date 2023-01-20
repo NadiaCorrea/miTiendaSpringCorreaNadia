@@ -52,8 +52,10 @@ public class WebSecurityConfig {
 		http.authorizeHttpRequests((requests) -> {
 			requests.requestMatchers("/").permitAll()
 			.requestMatchers("/register/**").permitAll()
+			.requestMatchers("/verify").permitAll()
 			.requestMatchers("/usuario/update").hasAuthority("USER")
 			.requestMatchers("/articulo/list").hasAnyAuthority("USER", "ADMIN")
+			.requestMatchers("/articulo/categoria").hasAnyAuthority("USER", "ADMIN")
 			.requestMatchers("/categoria/list").hasAnyAuthority("USER", "ADMIN")
 			.requestMatchers("/articulo/**").hasAnyAuthority("ADMIN")
 			.requestMatchers("/categoria/**").hasAnyAuthority("ADMIN")
