@@ -1,6 +1,9 @@
 package com.jacaranda.miTiendaSpringCorreaNadia.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.jacaranda.miTiendaSpringCorreaNadia.model.UserPassword;
 import com.jacaranda.miTiendaSpringCorreaNadia.model.Users;
 import com.jacaranda.miTiendaSpringCorreaNadia.service.UserService;
 
@@ -69,9 +73,19 @@ public class UsersController {
 
 	// shows the list of users
 	@GetMapping("/usuario/list")
-	public String showUsers(Model model) {
+	public String showUsers(Model model, @RequestParam("pageNumber") Optional<Integer> pageNumber,
+			@RequestParam("sizeNumber") Optional<Integer> sizeNumber,
+			@RequestParam("sortField") Optional<String> sortField,
+			@RequestParam("stringFind") Optional<String> stringFind) {
 
-		model.addAttribute("users", usersService.getUsers());
+		Page<Users> page = usersService.findAllUsers(pageNumber.orElse(1), sizeNumber.orElse(10), sortField.orElse("username"), stringFind.orElse(""));
+		
+		model.addAttribute("currentPage", pageNumber.orElse(1));
+		model.addAttribute("totalPages", page.getTotalPages());
+		model.addAttribute("totalItems", page.getTotalElements());
+		model.addAttribute("sortField", sortField.orElse("username"));
+		model.addAttribute("stringFind", stringFind.orElse(""));
+		model.addAttribute("users", page.getContent());
 
 		return "usersList";
 	}
@@ -165,7 +179,7 @@ public class UsersController {
 
 		try {
 			usersService.updateUser(user);
-			return "redirect:/usuario/list";
+			return "redirect:/articulo/list";
 
 		} catch (Exception e) {
 			model.addAttribute("errorMessage", e.getMessage());
@@ -174,6 +188,35 @@ public class UsersController {
 		}
 
 	}
+	
+	
+	@GetMapping("/usuario/password")
+	public String updatePassword(Model model, @RequestParam(name="id") String username) {
+		
+		UserPassword userPassword = new UserPassword();
+		userPassword.setUsername(username);
+		
+		model.addAttribute("userPassword", userPassword);
+		
+		
+		return "updatePassword";
+	}
+	
+	@PostMapping("/usuario/password/submit")
+	public String updatePasswordSubmit(@ModelAttribute("userPassword") UserPassword userPassword, Model eModel) {
+		
+		try {
+			usersService.updatePassword(userPassword);
+			return "redirect:/articulo/list";
+			
+		} catch (Exception e) {
+			eModel.addAttribute("errorMessage", e.getMessage());
+
+			return "error";
+		}
+		
+	}
+	
 
 	@GetMapping("/usuario/admin")
 	public String updateAdmin(Model model, @RequestParam(name = "id") String username) {

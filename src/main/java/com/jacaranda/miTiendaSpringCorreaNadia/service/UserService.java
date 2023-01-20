@@ -4,6 +4,10 @@ import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,6 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.jacaranda.miTiendaSpringCorreaNadia.model.UserException;
+import com.jacaranda.miTiendaSpringCorreaNadia.model.UserPassword;
 import com.jacaranda.miTiendaSpringCorreaNadia.model.Users;
 import com.jacaranda.miTiendaSpringCorreaNadia.repository.UserRepository;
 
@@ -112,10 +117,10 @@ public class UserService implements UserDetailsService {
 
 		if (existingUser != null) {
 
-			user.setPassword(existingUser.getPassword());
-			user.setRole(existingUser.getRole());
-
-			return usersRepository.save(user);
+			existingUser.setName(user.getName());
+			existingUser.setEmail(user.getEmail());
+		
+			return usersRepository.save(existingUser);
 
 		} else {
 			throw new UserException("El usuario no existe en la base de datos.");
@@ -164,4 +169,48 @@ public class UserService implements UserDetailsService {
 
 		return existingUser;
 	}
+	
+	
+	public Page<Users> findAllUsers(int pageNum, int pageSize, String sortField, String stringFind){
+		Pageable pageable = PageRequest.of(pageNum - 1, pageSize, Sort.by(sortField).ascending());
+		
+		if(stringFind.equals("")) {
+			return usersRepository.findAll(pageable);
+		} else {
+			return usersRepository.findByUsernameLike("%" + stringFind + "%", pageable);
+		}
+		
+	}
+	
+	public Users updatePassword(UserPassword userPassword) throws UserException {
+		
+		Users existingUser = getUser(userPassword.getUsername());
+		
+		if (existingUser != null) {
+			
+			if (userPassword.getNewPassword().equals(userPassword.getConfirmPassword())) {
+				
+				BCryptPasswordEncoder passEncoder = new BCryptPasswordEncoder();
+				if(passEncoder.matches(userPassword.getOldPassword(), existingUser.getPassword())) {
+					String encodedPassword = passEncoder.encode(userPassword.getNewPassword());
+					
+					existingUser.setPassword(encodedPassword);
+					
+					return usersRepository.save(existingUser);
+		
+				}else {
+					throw new UserException("Contraseña incorrecta.");
+				}
+				
+			} else {
+				throw new UserException("La nueva contraseña y su confirmación no coinciden.");
+			}	
+			
+		}else {
+			throw new UserException("No existe el usuario.");
+		}
+		
+		
+	}
+	
 }
