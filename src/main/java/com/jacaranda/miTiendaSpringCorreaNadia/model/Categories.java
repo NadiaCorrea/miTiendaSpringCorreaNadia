@@ -8,6 +8,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class Categories {
@@ -15,8 +16,10 @@ public class Categories {
 	@Id
 	private int catId;
 	@NotEmpty(message = "El nombre no puede quedar vacío")
+	@Size(max = 50, message = "El nombre no puede tener más de 50 caracteres")
 	private String name; 
 	@NotEmpty(message = "La descripción no puede quedar vacía")
+	@Size(max = 200, message = "La descripción no puede tener más de 200 caracteres")
 	private String description;
 	
 	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)

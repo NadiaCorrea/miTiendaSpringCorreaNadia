@@ -48,8 +48,7 @@
 						th:if="${#authentication.principal.role == 'ADMIN'}"><a
 						class="nav-link active" aria-current="page"
 						th:href="@{/usuario/list}">Usuarios</a></li>
-					<li class="nav-item"><a class="nav-link active"
-						aria-current="page" th:href="@{/logout}">Salir</a></li>
+					<li class="nav-item"><form th:action="@{/logout}" method="post"><button class="btn btn-primary" type="submit"><i class="bi bi-box-arrow-right"></i></button></form></li>
 				</ul>
 			</div>
 		</div>
@@ -85,7 +84,7 @@
 							<div class="col-9">
 								<input id="name" name="name" type="text" th:field="*{name}"
 									th:value="*{name}" class="form-control input-md"
-									required="required">
+									maxlength="100" required="required">
 							</div>
 						</div>
 
@@ -94,7 +93,7 @@
 							<div class="col-9">
 								<input id="email" name="email" type="email" th:field="*{email}"
 									th:value="*{email}" class="form-control input-md"
-									required="required">
+									maxlength="100" required="required">
 							</div>
 						</div>
 

@@ -48,8 +48,7 @@
 						th:if="${#authentication.principal.role == 'ADMIN'}"><a
 						class="nav-link active" aria-current="page"
 						th:href="@{/usuario/list}">Usuarios</a></li>
-					<li class="nav-item"><a class="nav-link active"
-						aria-current="page" th:href="@{/logout}">Salir</a></li>
+					<li class="nav-item"><form th:action="@{/logout}" method="post"><button class="btn btn-primary" type="submit"><i class="bi bi-box-arrow-right"></i></button></form></li>
 				</ul>
 			</div>
 		</div>
@@ -81,7 +80,7 @@
 							<div class="col-9">
 								<input id="name" name="name" type="text" th:field="*{name}"
 									th:value="*{name}" class="form-control input-md"
-									required="required">
+									maxlength="100" required="required">
 							</div>
 						</div>
 
@@ -90,7 +89,7 @@
 							<div class="col-9">
 								<input id="description" name="description" type="text"
 									th:field="*{description}" th:value="*{description}"
-									class="form-control input-md" required="required">
+									class="form-control input-md"  maxlength="200" required="required">
 							</div>
 						</div>
 
@@ -99,7 +98,7 @@
 							<div class="col-9">
 								<input id="price" name="price" type="text" th:field="*{price}"
 									th:value="*{price}" class="form-control input-md"
-									required="required">
+									min="0.01" required="required">
 							</div>
 						</div>
 
@@ -108,7 +107,7 @@
 							<div class="col-9">
 								<input id="stock" name="stock" type="text" th:field="*{stock}"
 									th:value="*{stock}" class="form-control input-md"
-									required="required">
+									min="0" required="required">
 							</div>
 						</div>
 

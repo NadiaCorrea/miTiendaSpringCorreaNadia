@@ -155,7 +155,7 @@ public class ElementController {
 	}
 
 	@PostMapping("/articulo/update/submit")
-	public String updateArticleSubmit(@ModelAttribute("element") Elements element, Model eModel) {
+	public String updateArticleSubmit(@Validated @ModelAttribute("element") Elements element, Model eModel) {
 
 		try {
 			eleService.updateElement(element);

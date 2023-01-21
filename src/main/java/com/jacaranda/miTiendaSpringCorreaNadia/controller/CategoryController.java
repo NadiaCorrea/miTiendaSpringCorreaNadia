@@ -125,7 +125,7 @@ public class CategoryController {
 	
 	
 	@PostMapping("/categoria/update/submit")
-	public String updateCategorySubmit(@ModelAttribute("category") Categories category, Model eModel) {
+	public String updateCategorySubmit(@Validated @ModelAttribute("category") Categories category, Model eModel) {
 	
 		try {
 			catService.updateCategory(category);

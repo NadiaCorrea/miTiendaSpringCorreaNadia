@@ -64,7 +64,9 @@ public class WebSecurityConfig {
 			
 			.anyRequest().permitAll();
 		})
-		.formLogin((form) -> form.permitAll())
+		.formLogin((form) -> form
+				.loginPage("/login")
+				.permitAll())
 		.logout((logout) -> logout.permitAll());
 		
 		return http.build();

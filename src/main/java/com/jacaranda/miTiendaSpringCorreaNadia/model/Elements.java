@@ -10,17 +10,23 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class Elements {
 	@Id
 	private int eleId;
-	@NotEmpty(message = "El nombre no puede quedar vacío")
+	@NotEmpty(message = "El nombre no puede quedar vacío.")
+	@Size(max = 100, message = "El nombre no puede tener más de 100 caracteres")
 	private String name;
-	@NotEmpty(message = "La descripción no puede quedar vacía")
+	@NotEmpty(message = "La descripción no puede quedar vacía.")
+	@Size(max = 200, message = "La descripción no puede tener más de 200 caracteres")
 	private String description;
+	@Min(value=0, message="El precio no puede ser inferior a 0.")
 	private double price;
+	@Min(value=0, message="El stock no puede ser inferior a 0.")
 	private int stock;
 	
 	@ManyToOne
@@ -35,11 +41,6 @@ public class Elements {
 		super();
 	
 	}
-
-
-	
-
-
 
 	public Elements(@NotEmpty(message = "El nombre no puede quedar vacío") String name,
 			@NotEmpty(message = "La descripción no puede quedar vacía") String description, double price, int stock,
@@ -102,12 +103,11 @@ public class Elements {
 	}
 
 	public void setPrice(double price) throws ElementException {
-		if (price > 0 ) {
+		if (price >= 0 ) {
 			this.price = price;
 		} else {
 			throw new ElementException("El precio no puede ser menor que 0.");
 		}
-		
 	}
 
 	public int getStock() {

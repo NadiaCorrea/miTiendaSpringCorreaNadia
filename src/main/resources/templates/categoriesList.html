@@ -43,9 +43,8 @@
 					<li class="nav-item"
 						th:if="${#authentication.principal.role == 'ADMIN'}"><a
 						class="nav-link active" aria-current="page"
-						th:href="@{/usuario/list}">Usuarios</a></li>
-					<li class="nav-item"><a class="nav-link active"
-						aria-current="page" th:href="@{/logout}">Salir</a></li>
+						th:href="@{/usuario/list}">Usuarios</a></li>		
+					<li class="nav-item"><form th:action="@{/logout}" method="post"><button class="btn btn-primary" type="submit"><i class="bi bi-box-arrow-right"></i></button></form></li>
 				</ul>
 				<form class="d-flex" role="search" th:action="@{/categoria/list}">
 					<input id="stringFind" class="form-control me-2" type="search"

@@ -175,7 +175,7 @@ public class UsersController {
 	}
 
 	@PostMapping("/usuario/update/submit")
-	public String updateUserSubmit(@ModelAttribute("user") Users user, Model model) {
+	public String updateUserSubmit(@Validated @ModelAttribute("user") Users user, Model model) {
 
 		try {
 			usersService.updateUser(user);

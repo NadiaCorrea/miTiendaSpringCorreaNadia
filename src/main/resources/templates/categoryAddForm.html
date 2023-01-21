@@ -48,8 +48,7 @@
 						th:if="${#authentication.principal.role == 'ADMIN'}"><a
 						class="nav-link active" aria-current="page"
 						th:href="@{/usuario/list}">Usuarios</a></li>
-					<li class="nav-item"><a class="nav-link active"
-						aria-current="page" th:href="@{/logout}">Salir</a></li>
+					<li class="nav-item"><form th:action="@{/logout}" method="post"><button class="btn btn-primary" type="submit"><i class="bi bi-box-arrow-right"></i></button></form></li>
 				</ul>
 			</div>
 		</div>
@@ -75,7 +74,7 @@
 							<div class="col-9">
 								<input id="name" th:field="*{name}" name="name" type="text"
 									placeholder="Introduce el nombre de la categoría"
-									class="form-control input-md" required>
+									class="form-control input-md" maxlength="50" required>
 							</div>
 						</div>
 
@@ -86,7 +85,7 @@
 								<input id="description" th:field="*{description}"
 									name="description" type="text"
 									placeholder="Introduce la descripción de la categoría"
-									class="form-control input-md" required>
+									class="form-control input-md" maxlength="200" required>
 							</div>
 						</div>
 
