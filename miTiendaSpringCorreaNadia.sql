@@ -298,7 +298,7 @@ ALTER TABLE miTiendaSpringCorreaNadia.`orders`
 -- Filtros para la tabla `elements`
 --
 ALTER TABLE miTiendaSpringCorreaNadia.`elements`
-  ADD CONSTRAINT `fk_elements` FOREIGN KEY (`category`) REFERENCES `categories` (`cat_id`);
+  ADD CONSTRAINT `fk_elements` FOREIGN KEY (`category`) REFERENCES `categories` (`cat_id`) ON DELETE CASCADE ON UPDATE CASCADE;
   
 --
 -- Filtros para la tabla `orders`
