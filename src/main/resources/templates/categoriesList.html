@@ -22,13 +22,20 @@
 				data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
 				aria-controls="navbarSupportedContent" aria-expanded="false"
 				aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
+				<i class="bi bi-list"></i>
 			</button>
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-					<li class="nav-item"><a class="nav-link active"
-						aria-current="page"
-						th:text="${#authentication.principal.username}"></a></li>
+					<li class="nav-item" ><a class="nav-link active"
+						aria-current="page" th:text="${#authentication.principal.username}"></a></li>
+					<li class="nav-item"
+						th:if="${#authentication.principal.role == 'USER'}"><a
+						class="nav-link active" aria-current="page"
+						th:href="@{/usuario/update?id=} + ${#authentication.principal.username}">Editar datos</a></li>
+					<li class="nav-item"
+						th:if="${#authentication.principal.role == 'USER'}"><a
+						class="nav-link active" aria-current="page"
+						th:href="@{/usuario/password?id=} + ${#authentication.principal.username}">Editar contraseña</a></li>
 					<li class="nav-item"><a class="nav-link active"
 						aria-current="page" th:href="@{/articulo/list}">Artículos</a></li>
 					<li class="nav-item"><a class="nav-link active"
@@ -52,7 +59,15 @@
 
 	<div class="container mb-3 p-5">
 		<div class="starter-template">
-			<h1>Listado de Categorías</h1>
+			
+			<div class="row justify-content-between">
+			<div class="col-10">
+				<h1>Listado de Categorías</h1>
+			</div>
+			<div class="col-2" th:if="${#authentication.principal.role == 'ADMIN'}">
+				<a th:href="@{/categoria/add}"><button class="btn btn-primary">Añadir</button></a>
+			</div>
+		</div>
 
 			<table class="table">
 				<thead>
@@ -61,6 +76,7 @@
 						<th><a
 							th:href="@{'/categoria/list?sortField=name&pageNumber=' + ${currentPage}} + '&stringFind=' + ${stringFind}">NOMBRE</a></th>
 						<th>DESCRIPCIÓN</th>
+						<th colspan="2">ACCIONES</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -68,8 +84,7 @@
 						<td th:text="${category.catId}"></td>
 						<td th:text="${category.name}"></td>
 						<td th:text="${category.description}"></td>
-						<td><a th:href="@{/articulo/categoria?catId=} + ${category.catId}"><button>Artículos</button></a></td>
-						<td>
+						<td><a th:href="@{/articulo/categoria?catId=} + ${category.catId}"><button class="btn btn-primary"><i class="bi bi-eye"></i> Artículos</button></a></td>
 						<td th:if="${#authentication.principal.role == 'ADMIN'}"><a
 							th:href="@{/categoria/update?id=} + ${category.catId}"><i class="bi bi-pencil-square text-primary"></i></a>
 							<a th:href="@{/categoria/delete?id=} + ${category.catId}"><i class="bi bi-trash3-fill text-danger"></i></a>

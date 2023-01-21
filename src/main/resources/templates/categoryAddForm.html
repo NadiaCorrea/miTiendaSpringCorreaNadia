@@ -8,51 +8,118 @@
 	rel="stylesheet"
 	integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
 	crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
 <link href="/form.css" rel="stylesheet">
 </head>
 <body>
-	<div class="container">
 
-		<form class="form-horizontal" action="#"
-			th:action="@{/categoria/add/submit}" th:object="${category}"
-			method="post">
-			<fieldset>
+	<nav class="navbar navbar-expand-lg bg-body-tertiary">
+		<div class="container-fluid">
+			<a class="navbar-brand" href=""><img
+				src="/img/logoComestiblesCorrea.svg" alt="Bootstrap" width="150"
+				height="150"></a>
+			<button class="navbar-toggler" type="button"
+				data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+				aria-controls="navbarSupportedContent" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<i class="bi bi-list"></i>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+					<li class="nav-item"><a class="nav-link active"
+						aria-current="page"
+						th:text="${#authentication.principal.username}"></a></li>
+					<li class="nav-item"
+						th:if="${#authentication.principal.role == 'USER'}"><a
+						class="nav-link active" aria-current="page"
+						th:href="@{/usuario/update?id=} + ${#authentication.principal.username}">Editar
+							datos</a></li>
+					<li class="nav-item"
+						th:if="${#authentication.principal.role == 'USER'}"><a
+						class="nav-link active" aria-current="page"
+						th:href="@{/usuario/password?id=} + ${#authentication.principal.username}">Editar
+							contraseña</a></li>
+					<li class="nav-item"><a class="nav-link active"
+						aria-current="page" th:href="@{/articulo/list}">Artículos</a></li>
+					<li class="nav-item"><a class="nav-link active"
+						aria-current="page" th:href="@{/categoria/list}">Categorías</a></li>
+					<li class="nav-item"
+						th:if="${#authentication.principal.role == 'ADMIN'}"><a
+						class="nav-link active" aria-current="page"
+						th:href="@{/usuario/list}">Usuarios</a></li>
+					<li class="nav-item"><a class="nav-link active"
+						aria-current="page" th:href="@{/logout}">Salir</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
 
-				<legend>Añadir Categoría</legend>
+	<div class="container mb-3 p-5">
 
-				<div class="form-group">
-					<label class="col-md-4 control-label" for="name">Nombre de
-						la categoría:</label>
-					<div class="col-md-4">
-						<input id="name" th:field="*{name}" name="name" type="text"
-							placeholder="Introduce el nombre de la categoría"
-							class="form-control input-md" required>
-					</div>
-				</div>
+		<div class="row justify-content-center">
 
-				<div class="form-group">
-					<label class="col-md-4 control-label" for="description">Descripción
-						de la categoría:</label>
-					<div class="col-md-4">
-						<input id="description" th:field="*{description}"
-							name="description" type="text"
-							placeholder="Introduce la descripción de la categoría"
-							class="form-control input-md" required>
-					</div>
-				</div>
+			<div class="col-sm-12 col-md-9">
 
-				<div class="form-group">
-					<label class="col-md-4 control-label" for="submit"></label>
-					<div class="col-md-4">
-						<button id="submit" name="submit" class="btn btn-primary">Añadir</button>
-						<a th:href="@{/categoria/list}" name="cancel"
-							class="btn btn-primary">Cancelar</a>
-					</div>
-				</div>
 
-			</fieldset>
-		</form>
+				<form class="form-horizontal" action="#"
+					th:action="@{/categoria/add/submit}" th:object="${category}"
+					method="post">
+					<fieldset>
 
+						<legend>Añadir Categoría</legend>
+
+						<div class="form-group">
+							<label class="col-9 control-label" for="name">Nombre de
+								la categoría:</label>
+							<div class="col-9">
+								<input id="name" th:field="*{name}" name="name" type="text"
+									placeholder="Introduce el nombre de la categoría"
+									class="form-control input-md" required>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-9 control-label" for="description">Descripción
+								de la categoría:</label>
+							<div class="col-9">
+								<input id="description" th:field="*{description}"
+									name="description" type="text"
+									placeholder="Introduce la descripción de la categoría"
+									class="form-control input-md" required>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-9 control-label" for="submit"></label>
+							<div class="col-9">
+								<button id="submit" name="submit" class="btn btn-primary">Añadir</button>
+								<a th:href="@{/categoria/list}" name="cancel"
+									class="btn btn-primary">Cancelar</a>
+							</div>
+						</div>
+
+					</fieldset>
+				</form>
+
+			</div>
+			<div class="col-3">
+				<img class="logo" alt="Logo de Comestibles Correa"
+					src="/img/logoComestiblesCorrea.svg">
+			</div>
+
+
+		</div>
 	</div>
+	<footer class="text-center text-lg-start">
+		<!-- Copyright -->
+		<div class="text-center p-3">© Comestibles Correa - 2023</div>
+		<!-- Copyright -->
+	</footer>
+
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+		crossorigin="anonymous"></script>
 </body>
 </html>
