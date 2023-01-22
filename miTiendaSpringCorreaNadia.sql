@@ -45,7 +45,7 @@ INSERT INTO miTiendaSpringCorreaNadia.`categories` (`cat_id`, `name`, `descripti
 (2, 'verduras', 'verduras varias'),
 (3, 'conservas', 'productos en conserva varios'),
 (4, 'bebidas', 'bebidas varias'),
-(5, 'cereales', 'cereales varios');
+(5, 'cereales', 'cereales varios'),
 (6, 'lacteos', 'lacteos varios'),
 (7, 'pescados', 'pescados varios'),
 (8, 'comida preparada', 'productos precocinados'),
@@ -231,7 +231,7 @@ CREATE TABLE miTiendaSpringCorreaNadia.`users` (
 INSERT INTO miTiendaSpringCorreaNadia.`users` (`username`, `password`, `name`, `email`, `role`, `verificationcode`, `enabled`) VALUES
 ('Charlotte', '$2a$10$8xpAPQdnUUQhR7WtvMP2Oev9uAFS1sImlm09aVSGa613gU8ll2fby', 'Charlotte Caro', 'ncormor536@gmail.com', 'USER', '', b'1'),
 ('Nadia', '$2a$10$TTxupsZ4H2u19F0sC7kZPOhDhPXyPJnyBQyR2ciqRJGQcPgRpHR6S', 'Nadia C', 'nadialiac@hotmail.com', 'ADMIN', '', b'1'),
-('Nash', '$2a$10$0XaYz6RA9VAVvDDp.SCJ/eY2/F0hTwdpThSt6.wekKL4z9T2f2Yq2', 'Nadia Correa', 'nadiaCorrea@gmail.com', 'USER', '', b'1'),
+('Nash', '$2a$10$0XaYz6RA9VAVvDDp.SCJ/eY2/F0hTwdpThSt6.wekKL4z9T2f2Yq2', 'Nadia Correa', 'nadiaCorrea@gmail.com', 'USER', '', b'1');
 --
 -- Índices para tablas volcadas
 --
