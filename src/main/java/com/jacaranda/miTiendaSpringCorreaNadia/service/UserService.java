@@ -128,6 +128,7 @@ public class UserService implements UserDetailsService {
 
 			existingUser.setName(user.getName());
 			existingUser.setEmail(user.getEmail());
+			existingUser.setImage(user.getImage());
 
 			return usersRepository.save(existingUser);
 
