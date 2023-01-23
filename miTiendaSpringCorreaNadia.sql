@@ -221,7 +221,8 @@ CREATE TABLE miTiendaSpringCorreaNadia.`users` (
   `email` varchar(100) DEFAULT NULL,
   `role` varchar(50) NOT NULL,
   `verificationcode` varchar(64) NOT NULL,
-  `enabled` bit(1) NOT NULL
+  `enabled` bit(1) NOT NULL,
+  `image` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
