@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.jacaranda.miTiendaSpringCorreaNadia.model.UserException;
 import com.jacaranda.miTiendaSpringCorreaNadia.model.UserPassword;
 import com.jacaranda.miTiendaSpringCorreaNadia.model.Users;
 import com.jacaranda.miTiendaSpringCorreaNadia.service.UserService;
@@ -36,17 +38,28 @@ public class UsersController {
 	}
 
 	@PostMapping("register/submit")
-	public String signUpSubmit(@Validated @ModelAttribute("newuser") Users newUser, Model model,
+	public String signUpSubmit(@Validated @ModelAttribute("newuser") Users newUser,@RequestParam(name="file") MultipartFile file, Model model,
 			BindingResult bindingResult, HttpServletRequest request) {
 
 		if (bindingResult.hasErrors()) {
 			return "register";
 		} else {
 			try {
+				
+				if (newUser.getPassword() == null || "".equals(newUser.getPassword().trim())) {
+					throw new UserException("La contraseña no puede estar vacía.");
+				} 
+				
+				//first it sends the verification mail 				
 				String siteURL = request.getRequestURL().toString();
 				siteURL = siteURL.replace(request.getServletPath(), "");
+				//then it sets the photo
+				String url = usersService.uploadFile(file);
+				newUser.setImage(url);
+				//It adds user to database
 				usersService.addUser(newUser, siteURL);
 				return "addedUser";
+				
 			} catch (Exception e) {
 
 				model.addAttribute("errorMessage", e.getMessage());
@@ -175,14 +188,20 @@ public class UsersController {
 	}
 
 	@PostMapping("/usuario/update/submit")
-	public String updateUserSubmit(@Validated @ModelAttribute("user") Users user, Model model) {
+	public String updateUserSubmit(@Validated @ModelAttribute("user") Users user, @RequestParam(name="file") MultipartFile file, Model eModel) {
 
 		try {
+			
+			if(file != null) {
+				String url = usersService.uploadFile(file);
+				user.setImage(url);
+			}
+					
 			usersService.updateUser(user);
 			return "redirect:/articulo/list";
 
 		} catch (Exception e) {
-			model.addAttribute("errorMessage", e.getMessage());
+			eModel.addAttribute("errorMessage", e.getMessage());
 
 			return "error";
 		}
@@ -203,7 +222,7 @@ public class UsersController {
 	}
 	
 	@PostMapping("/usuario/password/submit")
-	public String updatePasswordSubmit(@ModelAttribute("userPassword") UserPassword userPassword, Model eModel) {
+	public String updatePasswordSubmit(@Validated @ModelAttribute("userPassword") UserPassword userPassword, Model eModel) {
 		
 		try {
 			usersService.updatePassword(userPassword);

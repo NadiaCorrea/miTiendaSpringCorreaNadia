@@ -71,6 +71,11 @@
 			<artifactId>byte-buddy</artifactId>
 			<version>1.12.20</version>
 		</dependency>
+		<dependency>
+			<groupId>com.cloudinary</groupId>
+			<artifactId>cloudinary-http44</artifactId>
+			<version>1.17.0</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>

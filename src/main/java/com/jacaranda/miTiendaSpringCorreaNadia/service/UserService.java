@@ -1,7 +1,11 @@
 package com.jacaranda.miTiendaSpringCorreaNadia.service;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,7 +19,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import com.jacaranda.miTiendaSpringCorreaNadia.model.UserException;
 import com.jacaranda.miTiendaSpringCorreaNadia.model.UserPassword;
 import com.jacaranda.miTiendaSpringCorreaNadia.model.Users;
@@ -32,6 +39,9 @@ public class UserService implements UserDetailsService {
 
 	@Autowired
 	private JavaMailSender mailSender;
+
+	@Autowired
+	Cloudinary cloudinaryConfig;
 
 	public Users getUser(String username) {
 //		return usersRepository.findById(username).orElse(null);
@@ -66,7 +76,6 @@ public class UserService implements UserDetailsService {
 				// saving user in DB
 				user = usersRepository.save(newUser);
 				sendVerificationEmail(user, url);
-				
 
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -119,7 +128,7 @@ public class UserService implements UserDetailsService {
 
 			existingUser.setName(user.getName());
 			existingUser.setEmail(user.getEmail());
-		
+
 			return usersRepository.save(existingUser);
 
 		} else {
@@ -141,21 +150,20 @@ public class UserService implements UserDetailsService {
 		}
 
 	}
-	
-	
+
 	public void verifyUser(String code) throws UserException {
-		Users existingUser= usersRepository.findByVerificationcode(code);
-		
-		if(existingUser != null) {
+		Users existingUser = usersRepository.findByVerificationcode(code);
+
+		if (existingUser != null) {
 			existingUser.setEnabled(true);
 			existingUser.setVerificationcode("");
-			
+
 			usersRepository.save(existingUser);
-			
+
 		} else {
 			throw new UserException("El usuario no existe en la base de datos.");
 		}
-		
+
 	}
 
 	@Override
@@ -169,48 +177,75 @@ public class UserService implements UserDetailsService {
 
 		return existingUser;
 	}
-	
-	
-	public Page<Users> findAllUsers(int pageNum, int pageSize, String sortField, String stringFind){
+
+	public Page<Users> findAllUsers(int pageNum, int pageSize, String sortField, String stringFind) {
 		Pageable pageable = PageRequest.of(pageNum - 1, pageSize, Sort.by(sortField).ascending());
-		
-		if(stringFind.equals("")) {
+
+		if (stringFind.equals("")) {
 			return usersRepository.findAll(pageable);
 		} else {
 			return usersRepository.findByUsernameLike("%" + stringFind + "%", pageable);
 		}
-		
+
 	}
-	
+
 	public Users updatePassword(UserPassword userPassword) throws UserException {
-		
+
 		Users existingUser = getUser(userPassword.getUsername());
-		
+
 		if (existingUser != null) {
-			
+
 			if (userPassword.getNewPassword().equals(userPassword.getConfirmPassword())) {
-				
+
 				BCryptPasswordEncoder passEncoder = new BCryptPasswordEncoder();
-				if(passEncoder.matches(userPassword.getOldPassword(), existingUser.getPassword())) {
+				if (passEncoder.matches(userPassword.getOldPassword(), existingUser.getPassword())) {
 					String encodedPassword = passEncoder.encode(userPassword.getNewPassword());
-					
+
 					existingUser.setPassword(encodedPassword);
-					
+
 					return usersRepository.save(existingUser);
-		
-				}else {
+
+				} else {
 					throw new UserException("Contraseña incorrecta.");
 				}
-				
+
 			} else {
 				throw new UserException("La nueva contraseña y su confirmación no coinciden.");
-			}	
-			
-		}else {
+			}
+
+		} else {
 			throw new UserException("No existe el usuario.");
 		}
-		
-		
+
 	}
-	
+
+	public String uploadFile(MultipartFile file) {
+		
+		try {
+			
+			File uploadedFile = convertMultiPartToFile(file);
+			
+			Map<String, String> uploadResul = cloudinaryConfig.uploader().upload(uploadedFile, ObjectUtils.emptyMap());
+			boolean isDeleted = uploadedFile.delete();
+			
+			if(isDeleted) {
+				System.out.println("File successfully deleted");
+			}else {
+				System.out.println("File doesn't exist");
+			}
+			return uploadResul.get("url").toString();
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	private File convertMultiPartToFile(MultipartFile file) throws IOException {
+		File convFile = new File(file.getOriginalFilename());
+		FileOutputStream fos = new FileOutputStream(convFile);
+		fos.write(file.getBytes());
+		fos.close();
+		
+		return convFile; 
+	}
 }
+

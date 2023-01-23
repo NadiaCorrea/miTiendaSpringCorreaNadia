@@ -2,10 +2,15 @@ package com.jacaranda.miTiendaSpringCorreaNadia.model;
 
 import java.util.Objects;
 
+import jakarta.validation.constraints.NotEmpty;
+
 public class UserPassword {
 
+	@NotEmpty(message = "La contraseña antigua no puede quedar vacía")
 	private String oldPassword;
+	@NotEmpty(message = "La nueva contraseña no puede quedar vacía")
 	private String newPassword;
+	@NotEmpty(message = "La confirmación de la contraseña no puede quedar vacía")
 	private String confirmPassword;
 	private String username;
 	

@@ -48,7 +48,12 @@
 						th:if="${#authentication.principal.role == 'ADMIN'}"><a
 						class="nav-link active" aria-current="page"
 						th:href="@{/usuario/list}">Usuarios</a></li>
-					<li class="nav-item"><form th:action="@{/logout}" method="post"><button class="btn btn-primary" type="submit"><i class="bi bi-box-arrow-right"></i></button></form></li>
+					<li class="nav-item"><form th:action="@{/logout}"
+							method="post">
+							<button class="btn btn-primary" type="submit">
+								<i class="bi bi-box-arrow-right"></i>
+							</button>
+						</form></li>
 				</ul>
 			</div>
 		</div>
@@ -62,7 +67,7 @@
 
 				<form class="form-horizontal" action="#"
 					th:action="@{/usuario/update/submit}" th:object="${user}"
-					method="post">
+					method="post" enctype="multipart/form-data">
 					<fieldset>
 
 
@@ -95,6 +100,12 @@
 									th:value="*{email}" class="form-control input-md"
 									maxlength="100" required="required">
 							</div>
+						</div>
+
+
+					<div class="form-group">
+							<label class="col-9 control-label" for="file">Foto:</label> <input
+								id="file" name="file" type="file" class="form-control input-md">
 						</div>
 
 						<div class="form-group">

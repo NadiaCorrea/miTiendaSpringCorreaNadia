@@ -44,7 +44,7 @@
 			
 			
 			<form class="form-horizontal"
-				th:action="@{/register/submit}" th:object="${newuser}" method="post">
+				th:action="@{/register/submit}" th:object="${newuser}" method="post" enctype="multipart/form-data">
 				
 				<div class="mx-3 mb-3">
 					<label class="control-label" for="username">Nombre de usuario:</label>
@@ -84,13 +84,20 @@
 								placeholder="Introduce el email" class="form-control input-md"
 								maxlength="100" required>
 				</div>
+				
+				<div class="mx-3 mb-3">
+					<label class="col-md-4 control-label" for="file">Foto:</label>
+					<input id="file" name="file" type="file"
+					class="form-control input-md" required>
+				</div>
+				
 				<div class="mx-3 mb-3">
 					<label class="col-md-4 control-label" for="submit"></label>
 					<button id="submit" name="submit" class="btn btn-primary myButton"
 								disabled>Añadir</button>
 							<a th:href="@{/}" name="cancel" class="btn btn-primary myButton">Cancelar</a>
 				</div>
-			
+				
 			</form>
 
 			</div>

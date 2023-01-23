@@ -23,8 +23,6 @@ import jakarta.validation.constraints.Size;
 public class Users implements UserDetails {
 	@Id
 	private String username;
-	
-	@NotEmpty(message = "La contraseña no puede quedar vacía")
 	private String password;
 	
 	@NotEmpty(message = "El nombre no puede quedar vacío")
@@ -38,7 +36,7 @@ public class Users implements UserDetails {
 	private String role;
 	private String verificationcode;
 	private boolean enabled;
-	
+	private String image;
 	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Orders> orders = new ArrayList<>();
@@ -48,24 +46,25 @@ public class Users implements UserDetails {
 		super();
 	}
 
-
-	public Users(String username, String password, String name, String email) throws UserException {
+	public Users(String username, String password, String name, String email, String image) throws UserException {
 		super();
 		setUsername(username);
 		setPassword(password);
 		setName(name);
 		setEmail(email);
 		setRole("USER");
+		setImage(image);
 	}
 	
 	
-	public Users(String username, String password, String name, String email, String role) throws UserException {
+	public Users(String username, String password, String name, String email, String role, String image) throws UserException {
 		super();
 		setUsername(username);
 		setPassword(password);
 		setName(name);
 		setEmail(email);
 		setRole(role);
+		setImage(image);
 
 	}
 
@@ -137,7 +136,6 @@ public class Users implements UserDetails {
 		
 	}
 
-	
 	public String printAdmin() {
 		String result = "No";
 		
@@ -161,6 +159,16 @@ public class Users implements UserDetails {
 
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
+	}
+
+	
+	public String getImage() {
+		return image;
+	}
+
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 
 
@@ -191,15 +199,12 @@ public class Users implements UserDetails {
 		return Objects.equals(username, other.username);
 	}
 
-
-
 	@Override
 	public String toString() {
 		return "Users [username=" + username + ", password=" + password + ", name=" + name + ", email=" + email
-				+ ", role=" + role + ", verificationcode=" + verificationcode + ", enabled=" + enabled + ", orders="
-				+ orders + "]";
+				+ ", role=" + role + ", verificationcode=" + verificationcode + ", enabled=" + enabled + ", image="
+				+ image + ", orders=" + orders + "]";
 	}
-
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -236,8 +241,5 @@ public class Users implements UserDetails {
 	public boolean isEnabled() {
 		return this.enabled;
 	}
-
-	
-	
 
 }
