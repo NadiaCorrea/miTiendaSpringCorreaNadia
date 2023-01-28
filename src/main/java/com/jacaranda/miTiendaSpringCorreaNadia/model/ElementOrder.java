@@ -13,12 +13,12 @@ import jakarta.persistence.ManyToOne;
 public class ElementOrder {
 	@Id
 	@ManyToOne
-	@JoinColumn (name = "eleId", insertable = false, updatable = false)
+	@JoinColumn (name = "eleId")
 	private Elements element;
 	
 	@Id
 	@ManyToOne
-	@JoinColumn (name = "order_id", insertable = false, updatable = false)
+	@JoinColumn (name = "order_id")
 	private Orders order;
 	private int quantity;
 	

@@ -55,10 +55,6 @@ public class Elements {
 	}
 
 
-
-
-
-
 	public int getEleId() {
 		return eleId;
 	}
@@ -164,10 +160,6 @@ public class Elements {
 		return "Elements [eleId=" + eleId + ", name=" + name + ", description=" + description + ", price=" + price
 				+ ", stock=" + stock + ", category=" + category + ", elementOrder=" + elementOrder + "]";
 	}
-	
-
-	
-	
 	
 	
 }

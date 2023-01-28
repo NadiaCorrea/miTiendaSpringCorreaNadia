@@ -1,6 +1,5 @@
 package com.jacaranda.miTiendaSpringCorreaNadia.controller;
 
-import java.util.Enumeration;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,12 +15,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.jacaranda.miTiendaSpringCorreaNadia.model.Categories;
-import com.jacaranda.miTiendaSpringCorreaNadia.model.ElementException;
 import com.jacaranda.miTiendaSpringCorreaNadia.model.Elements;
 import com.jacaranda.miTiendaSpringCorreaNadia.service.CategoryService;
 import com.jacaranda.miTiendaSpringCorreaNadia.service.ElementService;
 
-import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class ElementController {

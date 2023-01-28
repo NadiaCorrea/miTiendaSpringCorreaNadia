@@ -14,6 +14,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -178,6 +180,17 @@ public class UserService implements UserDetailsService {
 
 		return existingUser;
 	}
+	
+	
+	public Users loggedUser() {
+		Users result = new Users();
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		result = (Users) auth.getPrincipal();
+		
+		return result;
+	}
+	
 
 	public Page<Users> findAllUsers(int pageNum, int pageSize, String sortField, String stringFind) {
 		Pageable pageable = PageRequest.of(pageNum - 1, pageSize, Sort.by(sortField).ascending());

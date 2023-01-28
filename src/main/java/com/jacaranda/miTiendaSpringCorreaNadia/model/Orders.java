@@ -18,12 +18,12 @@ import jakarta.persistence.OneToMany;
 public class Orders {
 	@Id
 	@Column(name="order_id")
-	private int order_id;
+	private int orderId;
 	private LocalDateTime date;
 	private double iva;
 	
 	@ManyToOne
-	@JoinColumn (name="username", insertable = false, updatable = false) // name refers to the column on the db table
+	@JoinColumn (name="username") // name refers to the column on the db table
 	private Users user;
 	
 	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -42,12 +42,12 @@ public class Orders {
 	}
 
 
-	public int getOrder_id() {
-		return order_id;
+	public int getOrderId() {
+		return orderId;
 	}
 
-	public void setOrder_id(int order_id) {
-		this.order_id = order_id;
+	public void setOrderId(int orderId) {
+		this.orderId = orderId;
 	}
 
 	public LocalDateTime getDate() {
@@ -102,7 +102,7 @@ public class Orders {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(order_id);
+		return Objects.hash(orderId);
 	}
 
 	@Override
@@ -114,12 +114,12 @@ public class Orders {
 		if (getClass() != obj.getClass())
 			return false;
 		Orders other = (Orders) obj;
-		return order_id == other.order_id;
+		return orderId == other.orderId;
 	}
 
 	@Override
 	public String toString() {
-		return "Orders [order_id=" + order_id + ", date=" + date + ", iva=" + iva + ", user=" + user + "]";
+		return "Orders [orderId=" + orderId + ", date=" + date + ", iva=" + iva + ", user=" + user + "]";
 	}
 
 	
