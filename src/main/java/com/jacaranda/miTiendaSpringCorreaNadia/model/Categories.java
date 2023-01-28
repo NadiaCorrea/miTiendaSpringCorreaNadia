@@ -5,6 +5,8 @@ import java.util.Objects;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotEmpty;
@@ -14,6 +16,7 @@ import jakarta.validation.constraints.Size;
 public class Categories {
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int catId;
 	@NotEmpty(message = "El nombre no puede quedar vacío")
 	@Size(max = 50, message = "El nombre no puede tener más de 50 caracteres")

@@ -16,6 +16,7 @@ import com.jacaranda.miTiendaSpringCorreaNadia.model.Elements;
 import com.jacaranda.miTiendaSpringCorreaNadia.model.Orders;
 import com.jacaranda.miTiendaSpringCorreaNadia.model.Users;
 import com.jacaranda.miTiendaSpringCorreaNadia.service.ElementService;
+import com.jacaranda.miTiendaSpringCorreaNadia.service.OrderService;
 import com.jacaranda.miTiendaSpringCorreaNadia.service.ShoppingCartService;
 import com.jacaranda.miTiendaSpringCorreaNadia.service.UserService;
 
@@ -32,6 +33,8 @@ public class ShoppingCartController {
 	ElementService eleServ;
 	@Autowired
 	UserService userSer;
+	@Autowired
+	OrderService ordServ;
 
 	@PostMapping("/shopping/addItem")
 	public String addCartItem(@RequestParam(name = "eleId") int eleId, @RequestParam(name = "quantity") int quantity,
@@ -76,4 +79,24 @@ public class ShoppingCartController {
 		return "cartList";
 	}
 
+	@GetMapping("/shopping/payment")
+	public String payOrder(Model model) {
+		
+		try {
+			Users user = userSer.loggedUser();
+			Orders ord = new Orders(LocalDateTime.now(), IVA, user);
+			List<ElementOrder> elementOrds = shopCart.getElementOrdersFormCart(ord);
+			ord.setElementOrder(elementOrds);
+			ordServ.saveOrder(ord);
+		
+			session.setAttribute("ShoppingCart", null);
+			
+			return "orderConfirmation";
+			
+		} catch (Exception e) {
+			model.addAttribute("errorMessage", e.getMessage());
+			return "error";
+		}
+	}
+	
 }

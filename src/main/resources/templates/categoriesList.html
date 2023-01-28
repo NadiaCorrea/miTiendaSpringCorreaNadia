@@ -13,7 +13,7 @@
 </head>
 <body>
 
-	<nav class="navbar navbar-expand-lg bg-body-tertiary">
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
 		<div class="container-fluid">
 			<a class="navbar-brand" href=""><img
 				src="/img/logoComestiblesCorrea.svg" alt="Bootstrap" width="150"
@@ -26,35 +26,64 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-					<li class="nav-item" ><a class="nav-link active"
-						aria-current="page" th:text="${#authentication.principal.username}"></a></li>
-					<li class="nav-item"
-						th:if="${#authentication.principal.role == 'USER'}"><a
-						class="nav-link active" aria-current="page"
-						th:href="@{/usuario/update?id=} + ${#authentication.principal.username}">Editar datos</a></li>
-					<li class="nav-item"
-						th:if="${#authentication.principal.role == 'USER'}"><a
-						class="nav-link active" aria-current="page"
-						th:href="@{/usuario/password?id=} + ${#authentication.principal.username}">Editar contraseña</a></li>
-					<li class="nav-item"><a class="nav-link active"
+			
+			<!-- Avatar -->
+					<li class="nav-item dropdown">
+					<a
+						class="nav-link dropdown-toggle" href="#"
+						id="navbarDropdownMenuLink" role="button"
+						data-bs-toggle="dropdown" aria-expanded="false"> <img
+							th:src="${#authentication.principal.image}"
+							th:if="${#authentication.principal.image != ''}"
+							class="rounded-circle" height="32" alt="Imagen del usuario"
+							loading="lazy" /> <i class="bi bi-person-circle"
+							th:if="${#authentication.principal.image == ''}"></i>
+					</a>
+						<ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink"
+							th:if="${#authentication.principal.role == 'USER'}">
+							<li><a class="dropdown-item"
+								th:href="@{/usuario/update?id=} + ${#authentication.principal.username}">Editar
+									datos</a></li>
+							<li><a class="dropdown-item"
+								th:href="@{/usuario/password?id=} + ${#authentication.principal.username}">Editar
+									contraseña</a></li>
+						</ul>
+					</li>
+		<!-- end of avatar and dropdown -->	
+			
+					<li class="nav-item"><a class="nav-link"
+						th:text="${#authentication.principal.username}"></a></li>
+					<li class="nav-item"><a class="nav-link"
 						aria-current="page" th:href="@{/articulo/list}">Artículos</a></li>
-					<li class="nav-item"><a class="nav-link active"
-						aria-current="page" th:href="@{/categoria/list}">Categorías</a></li>
+					<li class="nav-item"><a class="nav-link active" style="font-weight:bold;"
+						th:href="@{/categoria/list}">Categorías</a></li>
 					<li class="nav-item"
 						th:if="${#authentication.principal.role == 'ADMIN'}"><a
-						class="nav-link active" aria-current="page"
-						th:href="@{/usuario/list}">Usuarios</a></li>		
-					<li class="nav-item"><form th:action="@{/logout}" method="post"><button class="btn btn-primary" type="submit"><i class="bi bi-box-arrow-right"></i></button></form></li>
+						class="nav-link"
+						th:href="@{/usuario/list}">Usuarios</a></li>
 				</ul>
-				<form class="d-flex" role="search" th:action="@{/categoria/list}">
+				
+				<div class="nav-item ms-2 mb-2 mb-lg-0">
+				<form class="d-flex" role="search" th:action="@{/articulo/list}">
 					<input id="stringFind" class="form-control me-2" type="search"
 						name="stringFind" size="50" th:value="${stringFind}"
 						placeholder="Búsqueda" aria-label="Search">
 					<button class="btn btn-outline-success" type="submit">Buscar</button>
 				</form>
+				</div>
+				
+				<div class="nav-item ms-2 mb-2 mb-lg-0">
+					<form th:action="@{/logout}"
+							method="post">
+							<button class="btn btn-primary" type="submit">
+								<i class="bi bi-box-arrow-right"></i>
+							</button>
+					</form>
+				<div>
 			</div>
 		</div>
 	</nav>
+
 
 	<div class="container mb-3 p-5">
 		<div class="starter-template">
@@ -72,9 +101,8 @@
 				<thead>
 					<tr>
 						<th>ID</th>
-						<th><a
-							th:href="@{'/categoria/list?sortField=name&pageNumber=' + ${currentPage}} + '&stringFind=' + ${stringFind}">NOMBRE</a></th>
-						<th>DESCRIPCIÓN</th>
+						<th><a th:href="@{'/categoria/list?sortField=name&pageNumber=' + ${currentPage}} + '&stringFind=' + ${stringFind}">NOMBRE</a></th>
+						<th><a th:href="@{'/categoria/list?sortField=description&pageNumber=' + ${currentPage}} + '&stringFind=' + ${stringFind}">DESCRIPCIÓN</a></th>
 						<th colspan="2">ACCIONES</th>
 					</tr>
 				</thead>
@@ -92,7 +120,7 @@
 				</tbody>
 			</table>
 		</div>
-		<div>
+		<div class="text-center mt-3">
 			Total de categorías: <a
 				th:href="@{'/categoria/list?pageNumber=1&sizeNumber=' + ${totalItems} + '&sortField=' + ${sortField}} + '&stringFind=' + ${stringFind}"
 				th:text="${totalItems}" /><a th:if="${currentPage > 1}"

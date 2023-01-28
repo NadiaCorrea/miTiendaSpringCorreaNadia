@@ -58,7 +58,7 @@ public class WebSecurityConfig {
 			.requestMatchers("/articulo/list").hasAnyAuthority("USER", "ADMIN")
 			.requestMatchers("/articulo/categoria").hasAnyAuthority("USER", "ADMIN")
 			.requestMatchers("/categoria/list").hasAnyAuthority("USER", "ADMIN")
-			.requestMatchers("/shopping/addItem").hasAuthority("USER")
+			.requestMatchers("/shopping/**").hasAuthority("USER")
 			.requestMatchers("/articulo/**").hasAnyAuthority("ADMIN")
 			.requestMatchers("/categoria/**").hasAnyAuthority("ADMIN")
 			.requestMatchers("/usuario/**").hasAuthority("ADMIN")

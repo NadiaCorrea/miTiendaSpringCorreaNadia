@@ -31,9 +31,9 @@
 
 					<!-- Avatar -->
 					<li class="nav-item dropdown"><a
-						class="nav-link dropdown-toggle d-flex align-items-center"
-						href="#" id="navbarDropdownMenuLink" role="button"
-						data-mdb-toggle="dropdown" aria-expanded="false"> <img
+						class="nav-link dropdown-toggle" href="#"
+						id="navbarDropdownMenuLink" role="button"
+						data-bs-toggle="dropdown" aria-expanded="false"> <img
 							th:src="${#authentication.principal.image}"
 							th:if="${#authentication.principal.image != ''}"
 							class="rounded-circle" height="32" alt="Imagen del usuario"
@@ -49,6 +49,7 @@
 								th:href="@{/usuario/password?id=} + ${#authentication.principal.username}">Editar
 									contraseña</a></li>
 						</ul></li>
+					<!-- end of avatar and dropdown -->
 
 					<li class="nav-item"><a class="nav-link"
 						th:text="${#authentication.principal.username}"></a></li>
@@ -67,7 +68,6 @@
 							<i class="bi bi-box-arrow-right"></i>
 						</button>
 					</form>
-					<div></div>
 				</div>
 	</nav>
 
@@ -99,14 +99,16 @@
 						<td th:text="${elementOrd.element.name}"></td>
 						<td th:text="${elementOrd.element.description}"></td>
 						<td th:text="${elementOrd.quantity}"></td>
-						<td th:text="${#numbers.formatDecimal(elementOrd.element.price,1,2, 'POINT')}"></td>
-						<td th:text="${#numbers.formatDecimal(elementOrd.quantity * elementOrd.element.price,1,2, 'POINT')}"></td>
-					</tr> 
+						<td
+							th:text="${#numbers.formatDecimal(elementOrd.element.price,1,2, 'POINT')}"></td>
+						<td
+							th:text="${#numbers.formatDecimal(elementOrd.quantity * elementOrd.element.price,1,2, 'POINT')}"></td>
+					</tr>
 				</tbody>
 				<tfoot>
 					<tr>
 						<td colspan="5">SUBTOTAL</td>
-						<td th:text ="${#numbers.formatDecimal(subtotal,1,2, 'POINT')}"></td>
+						<td th:text="${#numbers.formatDecimal(subtotal,1,2, 'POINT')}"></td>
 					</tr>
 					<tr>
 						<td colspan="4">IVA</td>
@@ -120,13 +122,11 @@
 				</tfoot>
 			</table>
 
-			<div>
-				<div class="col-6" th:if="${elementOrds.size() > 0}">
-					<a th:href="@{/payment}"><button class="btn btn-primary">Pagar</button></a>
-				</div>
-				<div class="col-6">
-					<a th:href="@{/articulo/list}"><button class="btn btn-primary">Cancelar</button></a>
-				</div>
+			<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+				<a th:href="@{/shopping/payment}" th:if="${elementOrds.size() > 0}"><button class="btn btn-primary me-md-2" type="button">Pagar</button></a>
+				
+				<a th:href="@{/articulo/list}"><button class="btn btn-primary" type="button">Cancelar</button></a>
+				
 			</div>
 
 		</div>
@@ -143,7 +143,5 @@
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
 		crossorigin="anonymous"></script>
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.js"></script>
 </body>
 </html>

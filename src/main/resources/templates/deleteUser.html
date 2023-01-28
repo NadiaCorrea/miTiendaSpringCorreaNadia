@@ -26,19 +26,35 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-					<li class="nav-item"><a class="nav-link active"
-						aria-current="page"
+				
+					<!-- Avatar -->
+					<li class="nav-item dropdown">
+					<a
+						class="nav-link dropdown-toggle" href="#"
+						id="navbarDropdownMenuLink" role="button"
+						data-bs-toggle="dropdown" aria-expanded="false"> <img
+							th:src="${#authentication.principal.image}"
+							th:if="${#authentication.principal.image != ''}"
+							class="rounded-circle" height="32" alt="Imagen del usuario"
+							loading="lazy" /> <i class="bi bi-person-circle"
+							th:if="${#authentication.principal.image == ''}"></i>
+					</a>
+						<ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink"
+							th:if="${#authentication.principal.role == 'USER'}">
+							<li><a class="dropdown-item"
+								th:href="@{/usuario/update?id=} + ${#authentication.principal.username}">Editar
+									datos</a></li>
+							<li><a class="dropdown-item"
+								th:href="@{/usuario/password?id=} + ${#authentication.principal.username}">Editar
+									contraseña</a></li>
+						</ul>
+					</li>
+		<!-- end of avatar and dropdown -->
+		
+					<li class="nav-item"><a class="nav-link"
 						th:text="${#authentication.principal.username}"></a></li>
-					<li class="nav-item"
-						th:if="${#authentication.principal.role == 'USER'}"><a
-						class="nav-link active" aria-current="page"
-						th:href="@{/usuario/update?id=} + ${#authentication.principal.username}">Editar
-							datos</a></li>
-					<li class="nav-item"
-						th:if="${#authentication.principal.role == 'USER'}"><a
-						class="nav-link active" aria-current="page"
-						th:href="@{/usuario/password?id=} + ${#authentication.principal.username}">Editar
-							contraseña</a></li>
+		
+							
 					<li class="nav-item"><a class="nav-link active"
 						aria-current="page" th:href="@{/articulo/list}">Artículos</a></li>
 					<li class="nav-item"><a class="nav-link active"
@@ -47,8 +63,15 @@
 						th:if="${#authentication.principal.role == 'ADMIN'}"><a
 						class="nav-link active" aria-current="page"
 						th:href="@{/usuario/list}">Usuarios</a></li>
-					<li class="nav-item"><form th:action="@{/logout}" method="post"><button class="btn btn-primary" type="submit"><i class="bi bi-box-arrow-right"></i></button></form></li>
 				</ul>
+				
+				<div class="nav-item ms-2 mb-2 mb-lg-0">
+					<form th:action="@{/logout}" method="post">
+						<button class="btn btn-primary" type="submit">
+							<i class="bi bi-box-arrow-right"></i>
+						</button>
+					</form>
+				</div>
 			</div>
 		</div>
 	</nav>

@@ -6,6 +6,8 @@ import java.util.Objects;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -17,6 +19,7 @@ import jakarta.validation.constraints.Size;
 @Entity
 public class Elements {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int eleId;
 	@NotEmpty(message = "El nombre no puede quedar vacío.")
 	@Size(max = 100, message = "El nombre no puede tener más de 100 caracteres")

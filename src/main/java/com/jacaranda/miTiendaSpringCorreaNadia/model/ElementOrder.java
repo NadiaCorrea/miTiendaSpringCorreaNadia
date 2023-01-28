@@ -55,13 +55,9 @@ public class ElementOrder {
 		return order;
 	}
 	
-	public void setOrder(Orders order) throws ElementOrderException {
-		if(order != null) {
-			this.order = order;
-		} else {
-			throw new ElementOrderException("El pedido no puede ser nulo.");
-		}
+	public void setOrder(Orders order){
 		
+			this.order = order;
 	}
 	
 	public int getQuantity() {
